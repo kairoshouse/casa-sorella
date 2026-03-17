@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="description" content="The Casa Sorella Standard: five operating principles that define our approach to residential installation in DC and Northern Virginia. Licensed, insured, and directly accountable."/>
+<meta name="robots" content="index, follow"/>
+<meta property="og:type" content="website"/>
+<meta property="og:title" content="Our Standard | Licensed GC Firm | Casa Sorella DC"/>
+<meta property="og:description" content="The Casa Sorella Standard: five operating principles that define our approach to residential installation in DC and Northern Virginia. Licensed, insured, and directly accountable."/>
+<meta property="og:site_name" content="Casa Sorella"/>
+<meta name="keywords" content="TV mounting DC, art hanging Arlington, licensed GC firm DC, metal stud TV mounting, Samsung Frame TV specialist DC, heavy mirror anchoring, luxury high-rise installation, concrete wall mounting DC, furniture assembly Northern Virginia, picture hanging DC"/>
+<title>Our Standard | Licensed GC Firm | Casa Sorella DC</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="style.css"/>
+<style>
+
+/* ═══════════════════════════════════════════
+   RESET & TOKENS
+═══════════════════════════════════════════ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border-radius: 0 !important;
+}
+
+:root {
+  --navy:       #002147;
+  --white:      #FDFDFD;
+  --warm-white: #FAF9F6;
+  --sky:        #E3E9F0;
+  --serif:      'Playfair Display', serif;
+  --sans:       'Montserrat', sans-serif;
+  --pad-h:      60px;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--warm-white);
+  color: var(--navy);
+  font-family: var(--sans);
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+
+/* ═══════════════════════════════════════════
+   MODULE: NAV
+═══════════════════════════════════════════ */
+#nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 300;
+  background: var(--navy);
+  display: grid;
+  grid-template-columns: 44px 1fr 44px;
+  align-items: center;
+  padding: 0 var(--pad-h);
+  height: 76px;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+
+.nav__hamburger {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px 0;
+  width: 32px;
+  flex-shrink: 0;
+}
+
+.nav__hamburger-line {
+  display: block;
+  height: 1px;
+  background: var(--white);
+  transition: transform 0.3s ease, opacity 0.3s ease, width 0.3s ease;
+}
+
+.nav__hamburger-line:nth-child(1) { width: 28px; }
+.nav__hamburger-line:nth-child(2) { width: 18px; }
+.nav__hamburger-line:nth-child(3) { width: 23px; }
+
+.nav__hamburger.is-open .nav__hamburger-line:nth-child(1) {
+  width: 24px;
+  transform: translateY(6px) rotate(45deg);
+}
+.nav__hamburger.is-open .nav__hamburger-line:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+.nav__hamburger.is-open .nav__hamburger-line:nth-child(3) {
+  width: 24px;
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+.nav__logo {
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--white);
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  text-decoration: none;
+  text-align: center;
+  justify-self: center;
+}
+
+.nav__cta-slot {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.nav__cta {
+  font-family: var(--sans);
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--navy) !important;
+  background: var(--white);
+  padding: 0.68rem 1.3rem;
+  text-decoration: none;
+  display: inline-block;
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+
+.nav__cta:hover { background: var(--sky); }
+
+.nav__drawer {
+  position: fixed;
+  top: 76px;
+  left: 0; right: 0;
+  background: var(--navy);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  z-index: 299;
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.42s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav__drawer.is-open { max-height: 480px; }
+
+.nav__drawer-inner {
+  padding: 36px var(--pad-h) 44px;
+  display: flex;
+  flex-direction: column;
+}
+
+.nav__drawer-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.nav__drawer-item:last-of-type { border-bottom: none; }
+.nav__drawer-item:hover { opacity: 0.55; }
+
+.nav__drawer-label {
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: clamp(1.4rem, 3.5vw, 2rem);
+  color: var(--white);
+  letter-spacing: -0.01em;
+  line-height: 1;
+}
+
+.nav__drawer-index {
+  font-family: var(--sans);
+  font-weight: 400;
+  font-size: 0.54rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: rgba(227,233,240,0.52);
+}
+
+.nav__drawer-cta {
+  margin-top: 2rem;
+  display: inline-flex;
+  align-self: flex-start;
+  font-family: var(--sans);
+  font-size: 0.64rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--navy);
+  background: var(--white);
+  padding: 0.88rem 2rem;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.nav__drawer-cta:hover { background: var(--sky); }
+
+.nav__overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  z-index: 298;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.nav__overlay.is-open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* ═══════════════════════════════════════════
+   MODULE: HERO — full Navy
+═══════════════════════════════════════════ */
+#hero {
+  background: var(--navy);
+  padding: 110px var(--pad-h) 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+#hero::before,
+#hero::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 1px;
+  height: 100%;
+  pointer-events: none;
+}
+#hero::before { left: 80px;  background: rgba(227,233,240,0.07); }
+#hero::after  { right: 80px; background: rgba(227,233,240,0.07); }
+
+.hero__eyebrow {
+  font-family: var(--sans);
+  font-weight: 400;
+  font-size: 0.57rem;
+  letter-spacing: 0.46em;
+  text-transform: uppercase;
+  color: rgba(227,233,240,0.58);
+  margin-bottom: 2.4rem;
+  opacity: 0;
+  animation: fadeUp 0.7s 0.1s forwards;
+}
+
+.hero__headline {
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: clamp(3.8rem, 10vw, 9rem);
+  color: var(--white);
+  line-height: 0.92;
+  letter-spacing: -0.01em;
+  margin-bottom: 0;
+  opacity: 0;
+  animation: fadeUp 0.9s 0.22s forwards;
+}
+
+.hero__rule {
+  width: 44px;
+  height: 1px;
+  background: rgba(227,233,240,0.2);
+  margin: 3rem auto;
+  opacity: 0;
+  animation: fadeUp 0.6s 0.42s forwards;
+}
+
+.hero__intro {
+  font-family: var(--sans);
+  font-weight: 400;
+  font-size: clamp(0.88rem, 1.7vw, 1.12rem);
+  line-height: 1.95;
+  letter-spacing: 0.12em;
+  color: rgba(227,233,240,0.78);
+  max-width: 500px;
+  text-align: center;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.52s forwards;
+}
+
+/* ═══════════════════════════════════════════
+   MODULE: PRINCIPLES
+═══════════════════════════════════════════ */
+#principles {
+  flex: 1;
+  max-width: 900px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 100px var(--pad-h) 60px;
+}
+
+/* ── Single principle row ── */
+.principle {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  gap: 0 52px;
+  padding: 72px 0;
+  border-bottom: 1px solid rgba(0,33,71,0.09);
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.75s ease, transform 0.75s ease;
+}
+
+.principle:first-child {
+  border-top: 1px solid rgba(0,33,71,0.09);
+  margin-top: 0;
+}
+
+.principle.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.principle__num {
+  font-family: var(--sans);
+  font-weight: 400;
+  font-size: clamp(3.2rem, 5.5vw, 5.8rem);
+  color: var(--navy);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  opacity: 0.13;
+  text-align: right;
+  padding-top: 0.05em;
+}
+
+.principle__content {
+  display: flex;
+  flex-direction: column;
+}
+
+.principle__title {
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: clamp(1.6rem, 3vw, 2.5rem);
+  color: var(--navy);
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+  margin-bottom: 1.6rem;
+}
+
+/* LGC credential tag — inline with title for principle 03 & 05 */
+.principle__credential {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.4rem;
+  align-self: flex-start;
+}
+
+.credential-pip {
+  width: 4px;
+  height: 4px;
+  background: var(--navy);
+  opacity: 0.3;
+  flex-shrink: 0;
+}
+
+.credential-text {
+  font-family: var(--sans);
+  font-weight: 500;
+  font-size: 0.58rem;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: rgba(0,33,71,0.42);
+}
+
+.principle__body {
+  font-family: var(--sans);
+  font-weight: 400;
+  font-size: clamp(0.88rem, 1.35vw, 1rem);
+  line-height: 2.15;
+  letter-spacing: 0.09em;
+  color: rgba(0,33,71,0.68);
+  max-width: 580px;
+}
+
+/* ═══════════════════════════════════════════
+   MODULE: CREDENTIALS BAND
+═══════════════════════════════════════════ */
+#credentials {
+  background: var(--sky);
+  border-top: 1px solid rgba(0,33,71,0.08);
+  border-bottom: 1px solid rgba(0,33,71,0.08);
+  padding: 40px var(--pad-h);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3rem;
+}
+
+.cred-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-shrink: 0;
+}
+
+.cred-item__icon {
+  width: 36px;
+  height: 36px;
+  border: 1px solid rgba(0,33,71,0.18);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.cred-item__icon svg {
+  width: 16px;
+  height: 16px;
+  stroke: var(--navy);
+  fill: none;
+  opacity: 0.5;
+}
+
+.cred-item__text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.cred-item__label {
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 0.6rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--navy);
+}
+
+.cred-item__sublabel {
+  font-family: var(--sans);
+  font-weight: 400;
+  font-size: 0.56rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(0,33,71,0.42);
+}
+
+.cred-divider {
+  width: 1px;
+  height: 36px;
+  background: rgba(0,33,71,0.12);
+  flex-shrink: 0;
+}
+
+/* ═══════════════════════════════════════════
+   MODULE: CLOSING CTA
+═══════════════════════════════════════════ */
+#closing {
+  background: var(--navy);
+  padding: 100px var(--pad-h);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.8rem;
+  text-align: center;
+}
+
+.closing__label {
+  font-family: var(--sans);
+  font-weight: 400;
+  font-size: 0.56rem;
+  letter-spacing: 0.44em;
+  text-transform: uppercase;
+  color: rgba(227,233,240,0.52);
+}
+
+.closing__rule {
+  width: 40px;
+  height: 1px;
+  background: rgba(227,233,240,0.16);
+}
+
+.closing__tagline {
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: clamp(0.78rem, 1.6vw, 1rem);
+  letter-spacing: 0.44em;
+  text-transform: uppercase;
+  color: var(--white);
+}
+
+.closing__cta {
+  margin-top: 0.6rem;
+  font-family: var(--sans);
+  font-size: 0.66rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--navy);
+  background: var(--white);
+  padding: 1rem 2.6rem;
+  text-decoration: none;
+  display: inline-block;
+  transition: background 0.2s;
+}
+
+.closing__cta:hover { background: var(--sky); }
+
+/* ═══════════════════════════════════════════
+   MODULE: FOOTER
+═══════════════════════════════════════════ */
+#footer {
+  background: var(--navy);
+  border-top: 1px solid rgba(255,255,255,0.05);
+  padding: 36px var(--pad-h);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.footer__line {
+  font-family: var(--sans);
+  font-weight: 400;
+  font-size: 0.58rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(227,233,240,0.26);
+  text-align: center;
+}
+
+.footer__sep {
+  margin: 0 1.1rem;
+  opacity: 0.35;
+}
+
+/* ═══════════════════════════════════════════
+   ANIMATIONS
+═══════════════════════════════════════════ */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════ */
+@media (max-width: 900px) {
+  :root { --pad-h: 32px; }
+  #hero { padding: 90px var(--pad-h) 80px; }
+  #hero::before, #hero::after { display: none; }
+  #principles { padding: 80px var(--pad-h) 40px; }
+
+  .principle {
+    grid-template-columns: 72px 1fr;
+    gap: 0 28px;
+    padding: 56px 0;
+  }
+
+  #credentials {
+    flex-direction: column;
+    gap: 1.6rem;
+    padding: 40px var(--pad-h);
+  }
+
+  .cred-divider { width: 40px; height: 1px; }
+
+  #closing { padding: 80px var(--pad-h); }
+}
+
+@media (max-width: 600px) {
+  :root { --pad-h: 20px; }
+  #nav { padding: 0 var(--pad-h); height: 68px; }
+  /* hamburger nav — always visible */
+  .nav__back { display: none; }
+
+  .principle {
+    grid-template-columns: 1fr;
+    gap: 0;
+    padding: 48px 0;
+  }
+
+  .principle__num {
+    font-size: 2.8rem;
+    text-align: left;
+    margin-bottom: 1.2rem;
+    opacity: 0.1;
+  }
+
+  #closing { padding: 68px var(--pad-h); }
+}
+
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+     MODULE: NAV
+═══════════════════════════════════════════ -->
+<header id="nav" role="banner">
+  <button class="nav__hamburger" id="nav-hamburger" aria-label="Open navigation" aria-expanded="false" aria-controls="nav-drawer">
+    <span class="nav__hamburger-line"></span>
+    <span class="nav__hamburger-line"></span>
+    <span class="nav__hamburger-line"></span>
+  </button>
+  <a class="nav__logo" href="https://casa-sorella.com" aria-label="Casa Sorella — Home">Casa Sorella</a>
+  <div class="nav__cta-slot">
+    <a href="get-started.html" class="nav__cta">Share Your Vision</a>
+  </div>
+</header>
+
+<!-- ═══════════════════════════════════════════
+     MODULE: HERO
+═══════════════════════════════════════════ -->
+<section id="hero" aria-label="Page Header">
+  <p class="hero__eyebrow navy-section-text">Casa Sorella &nbsp;—&nbsp; Operating Principles</p>
+  <h1 class="hero__headline">The Standard.</h1>
+  <div class="hero__rule" aria-hidden="true"></div>
+  <p class="hero__intro">The principles we bring to every residence.<br>No shortcuts. No guesswork.</p>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE: PRINCIPLES
+═══════════════════════════════════════════ -->
+<section id="principles" aria-label="The Five Principles">
+
+  <!-- 01 -->
+  <article class="principle">
+    <span class="principle__num" aria-hidden="true">01</span>
+    <div class="principle__content">
+      <h2 class="principle__title navy-section-header">The Walkthrough</h2>
+      <p class="principle__body navy-section-text">Every project begins with a deliberate walkthrough. We confirm your vision and verify the structural requirements of your space before work commences.</p>
+    </div>
+  </article>
+
+  <!-- 02 -->
+  <article class="principle">
+    <span class="principle__num" aria-hidden="true">02</span>
+    <div class="principle__content">
+      <h2 class="principle__title navy-section-header">Professional Discretion</h2>
+      <p class="principle__body navy-section-text">We treat your residence with complete respect for your privacy and routine. Our team operates with quiet efficiency and protective care.</p>
+    </div>
+  </article>
+
+  <!-- 03 — LGC credential -->
+  <article class="principle">
+    <span class="principle__num" aria-hidden="true">03</span>
+    <div class="principle__content">
+      <h2 class="principle__title navy-section-header">Technical Competence</h2>
+      <p class="principle__body navy-section-text">As a licensed general contracting firm, we specialize in the structural demands of modern residential construction. From wood and metal studs to masonry, we ensure secure, code-compliant, and level results.</p>
+    </div>
+  </article>
+
+  <!-- 04 -->
+  <article class="principle">
+    <span class="principle__num" aria-hidden="true">04</span>
+    <div class="principle__content">
+      <h2 class="principle__title navy-section-header">Standardized Rates</h2>
+      <p class="principle__body navy-section-text">We operate on a project-based rate guide. Pricing is determined by the technical scope of the task, ensuring consistency and total transparency.</p>
+    </div>
+  </article>
+
+  <!-- 05 — LGC credential -->
+  <article class="principle">
+    <span class="principle__num" aria-hidden="true">05</span>
+    <div class="principle__content">
+      <h2 class="principle__title navy-section-header">Professional Accountability</h2>
+      <p class="principle__body navy-section-text">Casa Sorella is a licensed general contracting firm. We provide the reliability of a high-end professional standard with the efficiency of a specialized firm.</p>
+    </div>
+  </article>
+
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE: CREDENTIALS BAND
+═══════════════════════════════════════════ -->
+<div id="credentials" role="region" aria-label="Credentials">
+
+  <div class="cred-item">
+    <div class="cred-item__icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" stroke-width="1.5">
+        <path stroke-linecap="square" stroke-linejoin="miter" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>
+      </svg>
+    </div>
+    <div class="cred-item__text">
+      <span class="cred-item__label">a licensed general contracting firm</span>
+      <span class="cred-item__sublabel">DC &amp; Northern Virginia</span>
+    </div>
+  </div>
+
+  <div class="cred-divider" aria-hidden="true"></div>
+
+  <div class="cred-item">
+    <div class="cred-item__icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" stroke-width="1.5">
+        <path stroke-linecap="square" stroke-linejoin="miter" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+      </svg>
+    </div>
+    <div class="cred-item__text">
+      <span class="cred-item__label">Fully Insured</span>
+      <span class="cred-item__sublabel">General Liability &amp; Workers' Comp</span>
+    </div>
+  </div>
+
+  <div class="cred-divider" aria-hidden="true"></div>
+
+  <div class="cred-item">
+    <div class="cred-item__icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" stroke-width="1.5">
+        <path stroke-linecap="square" stroke-linejoin="miter" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+      </svg>
+    </div>
+    <div class="cred-item__text">
+      <span class="cred-item__label">Direct Accountability</span>
+      <span class="cred-item__sublabel">No Third-Party Labor</span>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════════════════════════
+     MODULE: CLOSING CTA
+═══════════════════════════════════════════ -->
+<section id="closing" aria-label="Call to Action">
+  <p class="closing__label">Casa Sorella</p>
+  <div class="closing__rule" aria-hidden="true"></div>
+  <p class="closing__tagline">Your Space. Our Standard.</p>
+  <div class="closing__rule" aria-hidden="true"></div>
+  <a href="get-started.html" class="closing__cta">Share Your Vision</a>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE: FOOTER
+═══════════════════════════════════════════ -->
+<footer id="footer" role="contentinfo">
+  <div class="footer__col">
+    <p class="footer__brand">Casa Sorella</p>
+    <p class="footer__line">Your Space. Our Standard.</p>
+    <p class="footer__line footer__line--light">Licensed &amp; Insured.</p>
+  </div>
+</footer>
+
+
+
+<!-- ═══════════════════════════════════════════
+     FOOTER CTA
+═══════════════════════════════════════════ -->
+<div class="footer-cta-container">
+  
+</div>
+
+
+
+<script src="scripts.js"></script>
+</body>
+</html>

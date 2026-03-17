@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="description" content="Professional TV mounting, art hanging, and furniture assembly in DC and Northern Virginia. Samsung Frame TV specialists. Metal stud, masonry, and concrete mounting. Licensed GC firm."/>
+<meta name="robots" content="index, follow"/>
+<meta property="og:type" content="website"/>
+<meta property="og:title" content="Professional Art Hanging & TV Mounting | DC & Northern Virginia | Casa Sorella"/>
+<meta property="og:description" content="Professional TV mounting, art hanging, and furniture assembly in DC and Northern Virginia. Samsung Frame TV specialists. Metal stud, masonry, and concrete mounting. Licensed GC firm."/>
+<meta property="og:site_name" content="Casa Sorella"/>
+<meta name="keywords" content="TV mounting DC, art hanging Arlington, licensed GC firm DC, metal stud TV mounting, Samsung Frame TV specialist DC, heavy mirror anchoring, luxury high-rise installation, concrete wall mounting DC, furniture assembly Northern Virginia, picture hanging DC"/>
+<title>Professional Art Hanging &amp; TV Mounting | DC &amp; Northern Virginia | Casa Sorella</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="style.css"/>
+<style>
+
+/* ═══════════════════════════════════════════
+   RESET & TOKENS
+═══════════════════════════════════════════ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border-radius: 0 !important;
+}
+
+:root {
+  --navy:       #002147;
+  --white:      #FDFDFD;
+  --warm-white: #FAF9F6;
+  --sky:        #E3E9F0;
+  --serif:      'Playfair Display', serif;
+  --sans:       'Montserrat', sans-serif;
+  --pad-h:      60px;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--warm-white);
+  color: var(--navy);
+  font-family: var(--sans);
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+
+/* ═══════════════════════════════════════════
+   MODULE: NAV
+═══════════════════════════════════════════ */
+#nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 300;
+  background: var(--navy);
+  display: grid;
+  grid-template-columns: 44px 1fr 44px;
+  align-items: center;
+  padding: 0 var(--pad-h);
+  height: 76px;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+
+.nav__hamburger {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px 0;
+  width: 32px;
+  flex-shrink: 0;
+}
+
+.nav__hamburger-line {
+  display: block;
+  height: 1px;
+  background: var(--white);
+  transition: transform 0.3s ease, opacity 0.3s ease, width 0.3s ease;
+}
+
+.nav__hamburger-line:nth-child(1) { width: 28px; }
+.nav__hamburger-line:nth-child(2) { width: 18px; }
+.nav__hamburger-line:nth-child(3) { width: 23px; }
+
+.nav__hamburger.is-open .nav__hamburger-line:nth-child(1) {
+  width: 24px;
+  transform: translateY(6px) rotate(45deg);
+}
+.nav__hamburger.is-open .nav__hamburger-line:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+.nav__hamburger.is-open .nav__hamburger-line:nth-child(3) {
+  width: 24px;
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+.nav__logo {
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--white);
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  text-decoration: none;
+  text-align: center;
+  justify-self: center;
+}
+
+.nav__cta-slot {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.nav__cta {
+  font-family: var(--sans);
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--navy) !important;
+  background: var(--white);
+  padding: 0.68rem 1.3rem;
+  text-decoration: none;
+  display: inline-block;
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+
+.nav__cta:hover { background: var(--sky); }
+
+.nav__drawer {
+  position: fixed;
+  top: 76px;
+  left: 0; right: 0;
+  background: var(--navy);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  z-index: 299;
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.42s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav__drawer.is-open { max-height: 480px; }
+
+.nav__drawer-inner {
+  padding: 36px var(--pad-h) 44px;
+  display: flex;
+  flex-direction: column;
+}
+
+.nav__drawer-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.nav__drawer-item:last-of-type { border-bottom: none; }
+.nav__drawer-item:hover { opacity: 0.55; }
+
+.nav__drawer-label {
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: clamp(1.4rem, 3.5vw, 2rem);
+  color: var(--white);
+  letter-spacing: -0.01em;
+  line-height: 1;
+}
+
+.nav__drawer-index {
+  font-family: var(--sans);
+  font-weight: 400;
+  font-size: 0.54rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: rgba(227,233,240,0.52);
+}
+
+.nav__drawer-cta {
+  margin-top: 2rem;
+  display: inline-flex;
+  align-self: flex-start;
+  font-family: var(--sans);
+  font-size: 0.64rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--navy);
+  background: var(--white);
+  padding: 0.88rem 2rem;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.nav__drawer-cta:hover { background: var(--sky); }
+
+.nav__overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  z-index: 298;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.nav__overlay.is-open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* ═══════════════════════════════════════════
+   MODULE: HERO
+═══════════════════════════════════════════ */
+#hero {
+  background: var(--navy);
+  padding: 110px var(--pad-h) 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+#hero::before,
+#hero::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 1px;
+  height: 100%;
+  pointer-events: none;
+}
+#hero::before { left: 80px;  background: rgba(227,233,240,0.07); }
+#hero::after  { right: 80px; background: rgba(227,233,240,0.07); }
+
+.hero__credential {
+  font-family: var(--sans);
+  font-weight: 400;
+  font-size: 0.56rem;
+  letter-spacing: 0.46em;
+  text-transform: uppercase;
+  color: rgba(227,233,240,0.65);
+  margin-bottom: 1.6rem;
+  opacity: 0;
+  animation: fadeUp 0.6s 0.1s forwards;
+}
+
+/* Pill border around credential */
+.hero__credential-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2.8rem;
+  opacity: 0;
+  animation: fadeUp 0.6s 0.1s forwards;
+}
+
+.hero__credential-line {
+  width: 28px;
+  height: 1px;
+  background: rgba(227,233,240,0.2);
+}
+
+.hero__credential-text {
+  font-family: var(--sans);
+  font-weight: 400;
+  font-size: 0.54rem;
+  letter-spacing: 0.44em;
+  text-transform: uppercase;
+  color: rgba(227,233,240,0.65);
+  white-space: nowrap;
+}
+
+.hero__headline {
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: clamp(2rem, 5.5vw, 5rem);
+  color: var(--white);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  max-width: 740px;
+  opacity: 0;
+  animation: fadeUp 0.85s 0.24s forwards;
+}
+
+.hero__rule {
+  width: 44px;
+  height: 1px;
+  background: rgba(227,233,240,0.18);
+  margin: 3rem auto 0;
+  opacity: 0;
+  animation: fadeUp 0.6s 0.42s forwards;
+}
+
+/* ═══════════════════════════════════════════
+   MODULE: SERVICES
+═══════════════════════════════════════════ */
+#services {
+  flex: 1;
+  max-width: 920px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 100px var(--pad-h) 80px;
+}
+
+/* ── Single service block ── */
+.svc {
+  padding-bottom: 100px;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.75s ease, transform 0.75s ease;
+}
+
+.svc.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 1px Navy top rule */
+.svc__top-rule {
+  width: 100%;
+  height: 1px;
+  background: var(--navy);
+  margin-bottom: 44px;
+}
+
+/* Header row: index + title */
+.svc__header {
+  display: flex;
+  align-items: baseline;
+  gap: 1.4rem;
+  margin-bottom: 2rem;
+}
+
+.svc__index {
+  font-family: var(--sans);
+  font-weight: 400;
+  font-size: 0.6rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: rgba(0,33,71,0.28);
+  white-space: nowrap;
+  padding-top: 0.2rem;
+}
+
+.svc__title {
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: clamp(1.8rem, 3.5vw, 3.2rem);
+  color: var(--navy);
+  line-height: 1.02;
+  letter-spacing: -0.01em;
+}
+
+/* Primary copy */
+.svc__copy {
+  font-family: var(--sans);
+  font-weight: 400;
+  font-size: clamp(0.88rem, 1.3vw, 1rem);
+  line-height: 2.15;
+  letter-spacing: 0.09em;
+  color: rgba(0,33,71,0.68);
+  max-width: 620px;
+  margin-bottom: 3.2rem;
+}
+
+/* ── GC Edge block ── */
+.svc__gc-edge {
+  margin-bottom: 2.8rem;
+  padding: 0 0 0 28px;
+  border-left: 2px solid rgba(0,33,71,0.12);
+}
+
+.svc__gc-label {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 1rem;
+}
+
+.gc-label__pip {
+  width: 4px;
+  height: 4px;
+  background: var(--navy);
+  opacity: 0.28;
+  flex-shrink: 0;
+}
+
+.gc-label__text {
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 0.55rem;
+  letter-spacing: 0.38em;
+  text-transform: uppercase;
+  color: rgba(0,33,71,0.38);
+}
+
+.svc__gc-copy {
+  font-family: var(--sans);
+  font-weight: 400;
+  font-size: clamp(0.86rem, 1.25vw, 0.96rem);
+  line-height: 2.1;
+  letter-spacing: 0.09em;
+  color: rgba(0,33,71,0.64);
+  max-width: 600px;
+}
+
+/* ── Details line ── */
+.svc__details-label {
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 0.57rem;
+  letter-spacing: 0.36em;
+  text-transform: uppercase;
+  color: var(--navy);
+  margin-bottom: 0.9rem;
+}
+
+.svc__details-copy {
+  font-family: var(--sans);
+  font-weight: 400;
+  font-size: clamp(0.84rem, 1.2vw, 0.93rem);
+  line-height: 2;
+  letter-spacing: 0.09em;
+  color: rgba(0,33,71,0.55);
+  max-width: 600px;
+  margin-bottom: 2.8rem;
+}
+
+/* ── Per-section CTA link ── */
+.svc__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.9rem;
+  font-family: var(--sans);
+  font-weight: 500;
+  font-size: 0.62rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--navy);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(0,33,71,0.18);
+  padding-bottom: 0.15rem;
+  transition: opacity 0.2s;
+}
+
+.svc__link:hover { opacity: 0.5; }
+
+.svc__link-arrow {
+  display: inline-block;
+  width: 26px;
+  height: 1px;
+  background: currentColor;
+  position: relative;
+  transition: width 0.25s;
+}
+
+.svc__link:hover .svc__link-arrow { width: 36px; }
+
+.svc__link-arrow::after {
+  content: '';
+  position: absolute;
+  right: 0; top: -3px;
+  width: 6px; height: 6px;
+  border-right: 1px solid currentColor;
+  border-top: 1px solid currentColor;
+  transform: rotate(45deg);
+}
+
+/* ═══════════════════════════════════════════
+   SCROLL REVEAL UTILITY
+═══════════════════════════════════════════ */
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-delay-1 { transition-delay: 0.12s; }
+
+/* ═══════════════════════════════════════════
+   MODULE: PROJECT DETAILS
+═══════════════════════════════════════════ */
+#project-details {
+  background: var(--warm-white);
+  padding: 0 var(--pad-h) 100px;
+}
+
+.details__inner {
+  max-width: 920px;
+  margin: 0 auto;
+}
+
+.details__top-rule {
+  width: 100%;
+  height: 1px;
+  background: var(--navy);
+  margin-bottom: 56px;
+}
+
+.details__header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 56px;
+}
+
+.details__title {
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: clamp(1.8rem, 3.5vw, 3rem);
+  color: var(--navy);
+  line-height: 1;
+  letter-spacing: -0.01em;
+}
+
+.details__eyebrow {
+  font-family: var(--sans);
+  font-weight: 400;
+  font-size: 0.58rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: rgba(0,33,71,0.3);
+}
+
+.details__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+}
+
+.details__item {
+  padding: 44px 48px 44px 0;
+  border-top: 1px solid rgba(0,33,71,0.08);
+  border-right: 1px solid rgba(0,33,71,0.08);
+}
+
+.details__item:nth-child(even) {
+  padding: 44px 0 44px 48px;
+  border-right: none;
+}
+
+.details__item:nth-child(3),
+.details__item:nth-child(4) {
+  border-bottom: 1px solid rgba(0,33,71,0.08);
+}
+
+.details__item-label {
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 0.58rem;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--navy);
+  margin-bottom: 1.1rem;
+  display: block;
+}
+
+.details__item-copy {
+  font-family: var(--sans);
+  font-weight: 400;
+  font-size: clamp(0.84rem, 1.2vw, 0.94rem);
+  line-height: 2.05;
+  letter-spacing: 0.08em;
+  color: rgba(0,33,71,0.66);
+}
+
+/* ═══════════════════════════════════════════
+   MODULE: CLOSING BAND
+═══════════════════════════════════════════ */
+#closing {
+  background: var(--navy);
+  padding: 100px var(--pad-h);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.8rem;
+}
+
+.closing__label {
+  font-family: var(--sans);
+  font-weight: 400;
+  font-size: 0.55rem;
+  letter-spacing: 0.44em;
+  text-transform: uppercase;
+  color: rgba(227,233,240,0.26);
+}
+
+.closing__rule {
+  width: 40px;
+  height: 1px;
+  background: rgba(227,233,240,0.15);
+}
+
+.closing__tagline {
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: clamp(0.78rem, 1.6vw, 1rem);
+  letter-spacing: 0.44em;
+  text-transform: uppercase;
+  color: var(--white);
+}
+
+.closing__cta {
+  margin-top: 0.5rem;
+  font-family: var(--sans);
+  font-size: 0.66rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--navy);
+  background: var(--white);
+  padding: 1rem 2.6rem;
+  text-decoration: none;
+  display: inline-block;
+  transition: background 0.2s;
+}
+
+.closing__cta:hover { background: var(--sky); }
+
+/* ── LGC stamp inside closing band ── */
+.closing__credential {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  margin-top: 1rem;
+}
+
+.closing__cred-line {
+  width: 32px;
+  height: 1px;
+  background: rgba(227,233,240,0.15);
+}
+
+.closing__cred-text {
+  font-family: var(--sans);
+  font-weight: 400;
+  font-size: 0.53rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: rgba(227,233,240,0.22);
+}
+
+/* ═══════════════════════════════════════════
+   MODULE: FOOTER
+═══════════════════════════════════════════ */
+#footer {
+  background: var(--navy);
+  border-top: 1px solid rgba(255,255,255,0.05);
+  padding: 34px var(--pad-h);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.footer__line {
+  font-family: var(--sans);
+  font-weight: 400;
+  font-size: 0.58rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(227,233,240,0.25);
+  text-align: center;
+}
+
+.footer__sep {
+  margin: 0 1.1rem;
+  opacity: 0.35;
+}
+
+/* ═══════════════════════════════════════════
+   ANIMATIONS
+═══════════════════════════════════════════ */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════ */
+@media (max-width: 900px) {
+  :root { --pad-h: 32px; }
+  #hero    { padding: 90px var(--pad-h) 80px; }
+  #hero::before, #hero::after { display: none; }
+  #services { padding: 80px var(--pad-h) 60px; }
+  .svc { padding-bottom: 76px; }
+  #project-details { padding: 0 var(--pad-h) 80px; }
+  .details__header { flex-direction: column; gap: 0.8rem; }
+  #closing  { padding: 80px var(--pad-h); }
+}
+
+@media (max-width: 600px) {
+  :root { --pad-h: 20px; }
+  #nav { padding: 0 var(--pad-h); height: 68px; }
+  /* hamburger nav — always visible */
+  .nav__back { display: none; }
+
+  #hero    { padding: 68px var(--pad-h) 64px; }
+  #services { padding: 64px var(--pad-h) 40px; }
+  .svc { padding-bottom: 60px; }
+  .svc__top-rule { margin-bottom: 30px; }
+  .svc__gc-edge { padding-left: 18px; }
+  #project-details { padding: 0 var(--pad-h) 64px; }
+  .details__grid { grid-template-columns: 1fr; }
+  .details__item,
+  .details__item:nth-child(even) {
+    padding: 36px 0;
+    border-right: none;
+    border-bottom: 1px solid rgba(0,33,71,0.08);
+  }
+  .details__item:nth-child(3),
+  .details__item:nth-child(4) { border-bottom: 1px solid rgba(0,33,71,0.08); }
+  .details__item:last-child { border-bottom: none; }
+  #closing  { padding: 64px var(--pad-h); }
+}
+
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "provider": {
+    "@type": "HomeAndConstructionBusiness",
+    "name": "Casa Sorella",
+    "telephone": "+12029687878",
+    "url": "https://casa-sorella.github.io"
+  },
+  "serviceType": [
+    "TV Mounting",
+    "Art Hanging",
+    "Mirror Installation",
+    "Furniture Assembly"
+  ],
+  "areaServed": [
+    { "@type": "City", "name": "DC" },
+    { "@type": "City", "name": "Arlington" },
+    { "@type": "AdministrativeArea", "name": "Northern Virginia" }
+  ],
+  "description": "Professional TV mounting, art hanging, heavy mirror installation, and furniture assembly. Licensed GC firm serving DC and Northern Virginia. Metal stud, masonry, and concrete specialists.",
+  "keywords": "metal stud TV mounting, Samsung Frame TV DC, heavy mirror anchoring, luxury high-rise installation, concrete wall mounting, art hanging Arlington"
+}
+</script>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+     MODULE: NAV
+═══════════════════════════════════════════ -->
+<header id="nav" role="banner">
+  <button class="nav__hamburger" id="nav-hamburger" aria-label="Open navigation" aria-expanded="false" aria-controls="nav-drawer">
+    <span class="nav__hamburger-line"></span>
+    <span class="nav__hamburger-line"></span>
+    <span class="nav__hamburger-line"></span>
+  </button>
+  <a class="nav__logo" href="https://casa-sorella.com" aria-label="Casa Sorella — Home">Casa Sorella</a>
+  <div class="nav__cta-slot">
+    <a href="get-started.html" class="nav__cta">Share Your Vision</a>
+  </div>
+</header>
+
+<!-- ═══════════════════════════════════════════
+     MODULE: HERO
+═══════════════════════════════════════════ -->
+<section id="hero" aria-label="Page Header">
+
+  <div class="hero__credential-wrap" aria-label="A licensed general contracting firm">
+    <span class="hero__credential-line" aria-hidden="true"></span>
+    <span class="hero__credential-text">A licensed general contracting firm</span>
+    <span class="hero__credential-line" aria-hidden="true"></span>
+  </div>
+
+  <h1 class="hero__headline">Specific in Scope.<br>Exceptional in Execution.</h1>
+  <div class="hero__rule" aria-hidden="true"></div>
+
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE: SERVICES
+═══════════════════════════════════════════ -->
+<section id="services" aria-label="Our Services">
+
+  <!-- ── I. TV MOUNTING ── -->
+  <article class="svc">
+    <div class="svc__top-rule" aria-hidden="true"></div>
+    <div class="svc__header">
+      <span class="svc__index">I</span>
+      <h2 class="svc__title">TV Mounting</h2>
+    </div>
+    <p class="svc__copy">
+      We provide secure, level installations for standard displays and specialized gallery-style systems.
+    </p>
+
+    <div class="svc__gc-edge">
+      <div class="svc__gc-label" aria-label="The GC Edge">
+        <span class="gc-label__pip" aria-hidden="true"></span>
+        <span class="gc-label__text">The GC Edge</span>
+      </div>
+      <p class="svc__gc-copy">
+        As a licensed general contracting firm, we have a foundational understanding of residential structure. Whether navigating the metal-stud framing of a modern high-rise or the historic masonry of a DC rowhome, we apply structural expertise to every mount.
+      </p>
+    </div>
+
+    <p class="svc__details-label">Details</p>
+    <p class="svc__details-copy">
+      Specialized in Samsung Frame and LG Gallery series. Includes high-tensile hardware and clean, external wire management. We do not perform in-wall wiring.
+    </p>
+  </article>
+
+  <!-- ── II. ART & DECOR ── -->
+  <article class="svc">
+    <div class="svc__top-rule" aria-hidden="true"></div>
+    <div class="svc__header">
+      <span class="svc__index">II</span>
+      <h2 class="svc__title">Art &amp; Decor</h2>
+    </div>
+    <p class="svc__copy">
+      Specialized placement for large-format frames, heavy mirrors, and linear arrangements.
+    </p>
+
+    <div class="svc__gc-edge">
+      <div class="svc__gc-label" aria-label="The GC Edge">
+        <span class="gc-label__pip" aria-hidden="true"></span>
+        <span class="gc-label__text">The GC Edge</span>
+      </div>
+      <p class="svc__gc-copy">
+        We don't just hang; we anchor. We utilize our knowledge of load-bearing requirements and substrate composition to ensure your most significant pieces are secured with permanent, structural integrity.
+      </p>
+    </div>
+  </article>
+
+  <!-- ── III. FURNITURE ASSEMBLY ── -->
+  <article class="svc">
+    <div class="svc__top-rule" aria-hidden="true"></div>
+    <div class="svc__header">
+      <span class="svc__index">III</span>
+      <h2 class="svc__title">Furniture Assembly</h2>
+    </div>
+    <p class="svc__copy">
+      We assemble for stability and a flawless finish. Whether it's a primary bedroom suite or a complete home office, we ensure every piece is rock-solid, perfectly leveled, and integrated correctly into your space. We don't leave loose joints or leftover hardware. We just leave a finished room.
+    </p>
+
+    <div class="svc__gc-edge">
+      <div class="svc__gc-label" aria-label="The GC Edge">
+        <span class="gc-label__pip" aria-hidden="true"></span>
+        <span class="gc-label__text">The GC Edge</span>
+      </div>
+      <p class="svc__gc-copy">
+        We approach assembly with a contractor's standard — every connection torqued to spec, every component squared to the room. A piece of furniture feels high-end because it was built correctly.
+      </p>
+    </div>
+
+    <div class="svc__pillars">
+      <div class="svc__pillar-item">
+        <span class="svc__pillar-label">Bedroom &amp; Living</span>
+        <span class="svc__pillar-desc">Bed frames, dressers, and media consoles.</span>
+      </div>
+      <div class="svc__pillar-item">
+        <span class="svc__pillar-label">Workspace</span>
+        <span class="svc__pillar-desc">Desks, shelving units, and task seating.</span>
+      </div>
+      <div class="svc__pillar-item">
+        <span class="svc__pillar-label">Dining &amp; Occasional</span>
+        <span class="svc__pillar-desc">Dining sets, sideboards, and accent pieces.</span>
+      </div>
+    </div>
+  </article>
+
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE: PROJECT DETAILS
+═══════════════════════════════════════════ -->
+<section id="project-details" aria-label="Project Details">
+  <div class="details__inner">
+
+    <div class="details__top-rule" aria-hidden="true"></div>
+
+    <div class="details__header">
+      <h2 class="details__title">Project Planning.</h2>
+      <span class="details__eyebrow">Before we begin</span>
+    </div>
+
+    <div class="details__grid">
+
+      <div class="details__item reveal">
+        <span class="details__item-label">Manpower</span>
+        <p class="details__item-copy">For displays 65" or larger, we may require a two-person lift. We can coordinate a second technician or partner with you on the final placement.</p>
+      </div>
+
+      <div class="details__item reveal reveal-delay-1">
+        <span class="details__item-label">Timing</span>
+        <p class="details__item-copy">We recommend scheduling your installation approximately one week after move-in. This allows you to settle into the space and confirm your layout before we anchor any hardware to the structure.</p>
+      </div>
+
+      <div class="details__item reveal">
+        <span class="details__item-label">Hardware</span>
+        <p class="details__item-copy">We provide all project-specific hardware. Whether your walls are metal-stud, masonry, or traditional wood framing, we utilize structural-grade anchoring systems suited to the architecture.</p>
+      </div>
+
+      <div class="details__item reveal reveal-delay-1">
+        <span class="details__item-label">Service Area</span>
+        <p class="details__item-copy">We currently serve the District of Columbia and Northern Virginia.</p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE: CLOSING BAND
+═══════════════════════════════════════════ -->
+<section id="closing" aria-label="Call to Action">
+  <p class="closing__label">Casa Sorella</p>
+  <div class="closing__rule" aria-hidden="true"></div>
+  <p class="closing__tagline">Your Space. Our Standard.</p>
+  <div class="closing__rule" aria-hidden="true"></div>
+  <a href="get-started.html" class="closing__cta">Share Your Vision</a></section>
+
+<!-- ═══════════════════════════════════════════
+     MODULE: FOOTER
+═══════════════════════════════════════════ -->
+<footer id="footer" role="contentinfo">
+  <div class="footer__col">
+    <p class="footer__brand">Casa Sorella</p>
+    <p class="footer__line">Your Space. Our Standard.</p>
+    <p class="footer__line footer__line--light">Licensed &amp; Insured.</p>
+  </div>
+</footer>
+
+
+
+<!-- ═══════════════════════════════════════════
+     FOOTER CTA
+═══════════════════════════════════════════ -->
+<div class="footer-cta-container">
+  
+</div>
+
+
+
+<script src="scripts.js"></script>
+</body>
+</html>
