@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Get Started | Casa Sorella</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,800;1,400;1,700&family=Montserrat:wght@200;300;400;500;600&display=swap');
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --linen:   #FAF9F6;
+  --navy:    #001A33;
+  --bronze:  #B8A47E;
+  --muted:   rgba(0,26,51,.52);
+  --faint:   rgba(0,26,51,.32);
+  --border:  rgba(0,26,51,.07);
+  --radius:  6px;
+  --grain:   url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.032'/%3E%3C/svg%3E");
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  background-color: var(--linen);
+  background-image: var(--grain);
+  background-size: 300px 300px;
+  color: var(--navy);
+  -webkit-font-smoothing: antialiased;
+  line-height: 1;
+}
+
+a { text-decoration: none; color: inherit; }
+img { display: block; max-width: 100%; }
+
+/* ── NAV — glassmorphism ──────────────────────────────────────────── */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+  height: 66px;
+  display: flex; align-items: center; padding: 0 56px;
+  background: var(--navy);
+  border-bottom: 1px solid rgba(184,164,126,.1);
+  transition: background .35s;
+}
+.nav.solid {
+  background: rgba(250,249,246,.94);
+  backdrop-filter: blur(20px) saturate(1.5);
+  -webkit-backdrop-filter: blur(20px) saturate(1.5);
+  border-bottom: 1px solid rgba(184,164,126,.2);
+  box-shadow: 0 2px 24px rgba(0,26,51,.07);
+}
+.nav.solid .nav__cta:hover {
+  background: #fff;
+  box-shadow: 0 0 0 2.5px var(--bronze);
+  border-color: var(--bronze);
+}
+.nav__logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem; font-weight: 700;
+  letter-spacing: .1em; line-height: 1.2;
+  color: #fff; margin-right: auto;
+  transition: color .35s;
+}
+.nav.solid .nav__logo { color: var(--navy); }
+.nav__links { display: flex; list-style: none; gap: 32px; margin-right: 32px; }
+.nav__links a {
+  font-size: .72rem; font-weight: 400; letter-spacing: .12em;
+  text-transform: uppercase; color: rgba(255,255,255,.65);
+  transition: color .2s; position: relative;
+}
+.nav.solid .nav__links a { color: var(--muted); }
+.nav__links a::after {
+  content: ''; position: absolute; bottom: -4px; left: 0;
+  width: 0; height: 1px; background: var(--bronze);
+  transition: width .3s ease;
+}
+.nav__links a:hover, .nav__links a.active { color: #fff; }
+.nav.solid .nav__links a:hover,
+.nav.solid .nav__links a.active { color: var(--navy); }
+.nav__links a:hover::after, .nav__links a.active::after { width: 100%; }
+.nav__cta {
+  font-family: 'Montserrat', sans-serif;
+  font-size: .72rem; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; white-space: nowrap;
+  background: rgba(255,255,255,.15); color: #fff;
+  padding: 10px 26px; border-radius: var(--radius);
+  border: 1px solid rgba(255,255,255,.35);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: box-shadow .32s ease, border-color .32s ease, transform .2s ease;
+}
+.nav__cta:hover {
+  box-shadow: 0 0 0 2.5px var(--bronze);
+  border-color: var(--bronze);
+  transform: translateY(-1px);
+}
+.nav__ham {
+  display: none; flex-direction: column;
+  justify-content: center; gap: 5px;
+  background: none; border: none; cursor: pointer; padding: 6px;
+}
+.nav__ham span {
+  display: block; width: 22px; height: 1.5px;
+  background: #fff; transition: background .35s;
+}
+.nav.solid .nav__cta { background: var(--navy); color: #fff; border-color: var(--navy); backdrop-filter: none; -webkit-backdrop-filter: none; }
+.nav.solid .nav__ham span { background: var(--navy); }
+
+/* ── MOBILE MENU ─────────────────────────────────────────────────── */
+.mob-overlay {
+  position: fixed; inset: 0; z-index: 600;
+  background: rgba(0,26,51,.45);
+  opacity: 0; pointer-events: none; transition: opacity .3s;
+}
+.mob-overlay.open { opacity: 1; pointer-events: all; }
+.mob-menu {
+  position: fixed; top: 0; right: 0; bottom: 0; width: 280px;
+  z-index: 700; background: var(--navy);
+  display: flex; flex-direction: column;
+  padding: 72px 36px 40px; gap: 24px;
+  transform: translateX(100%);
+  transition: transform .34s cubic-bezier(.16,1,.3,1);
+}
+.mob-menu.open { transform: translateX(0); }
+.mob-menu__close {
+  position: absolute; top: 18px; right: 22px;
+  background: none; border: none; color: #fff;
+  font-size: 1.5rem; cursor: pointer; line-height: 1;
+}
+.mob-menu a {
+  font-size: .72rem; font-weight: 300; letter-spacing: .14em;
+  text-transform: uppercase; color: rgba(255,255,255,.62);
+  transition: color .2s;
+}
+.mob-menu a:hover { color: #fff; }
+
+/* ── PAGE HEADER ─────────────────────────────────────────────────── */
+.page-hdr {
+  background: var(--navy);
+  padding: 126px 56px 76px; margin-top: 66px;
+}
+.page-hdr__inner { max-width: 1100px; margin: 0 auto; }
+.page-hdr__eyebrow {
+  font-size: .62rem; font-weight: 400; letter-spacing: .24em;
+  text-transform: uppercase; color: var(--bronze);
+  display: block; margin-bottom: 20px;
+}
+.page-hdr__title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.2rem,4vw,3.6rem); font-weight: 700;
+  color: #fff; line-height: 1.06; letter-spacing: -.01em; margin-bottom: 18px;
+}
+.page-hdr__sub {
+  font-size: .84rem; font-weight: 300; letter-spacing: .025em;
+  color: rgba(255,255,255,.52); line-height: 2; max-width: 520px;
+}
+
+/* ── LAYOUT ──────────────────────────────────────────────────────── */
+.wrap { max-width: 1100px; margin: 0 auto; }
+
+/* ── SHARED TYPE ─────────────────────────────────────────────────── */
+.eyebrow {
+  font-size: .6rem; font-weight: 400; letter-spacing: .26em;
+  text-transform: uppercase; color: var(--bronze); display: block;
+}
+.title-serif {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700; color: var(--navy); line-height: 1.1;
+}
+.title-sans {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 200; color: var(--navy);
+  line-height: 1.3; letter-spacing: .06em;
+}
+.body-copy {
+  font-size: .82rem; font-weight: 300;
+  line-height: 2.05; color: var(--muted); letter-spacing: .025em;
+}
+
+/* ── BUTTONS ─────────────────────────────────────────────────────── */
+.btn {
+  display: inline-block;
+  font-family: 'Montserrat', sans-serif;
+  font-size: .58rem; font-weight: 700; letter-spacing: .18em;
+  text-transform: uppercase; cursor: pointer;
+  border-radius: var(--radius); transition: box-shadow .32s ease, border-color .32s ease, transform .2s ease;
+}
+.btn-navy {
+  background: var(--navy); color: #fff; border: 1px solid var(--navy); padding: 13px 36px; font-weight: 700;
+}
+.btn-navy:hover {
+  box-shadow: 0 0 0 2.5px var(--bronze); border-color: var(--bronze); transform: translateY(-2px);
+}
+.btn-ghost {
+  background: transparent; color: var(--bronze);
+  border: 1px solid var(--bronze); padding: 13px 36px;
+}
+.btn-ghost:hover { background: var(--bronze); color: var(--navy); transform: translateY(-2px); }
+
+/* ── BRONZE LINK ─────────────────────────────────────────────────── */
+.b-link {
+  font-size: .58rem; font-weight: 500; letter-spacing: .16em;
+  text-transform: uppercase; color: var(--navy);
+  border-bottom: 1px solid rgba(184,164,126,.4); padding-bottom: 2px;
+  transition: color .2s, border-color .2s;
+}
+.b-link:hover { color: var(--bronze); border-color: var(--bronze); }
+
+/* ── IMAGE TREATMENTS ────────────────────────────────────────────── */
+.img-wrap { overflow: hidden; border-radius: var(--radius); }
+.img-wrap img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+  filter: saturate(0.82);
+  transition: filter .5s ease, transform .6s ease;
+}
+.img-wrap:hover img { filter: saturate(1); transform: scale(1.04); }
+
+/* ── CARDS ───────────────────────────────────────────────────────── */
+.float-card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 6px 40px rgba(0,26,51,.07);
+  transition: box-shadow .35s ease, transform .35s ease;
+}
+.float-card:hover {
+  box-shadow: 0 20px 64px rgba(0,26,51,.13);
+  transform: translateY(-6px);
+}
+.dark-card {
+  background: var(--navy);
+  border-radius: 10px;
+  box-shadow: 0 12px 64px rgba(0,26,51,.22);
+}
+
+/* ── REVEAL ANIMATION ────────────────────────────────────────────── */
+.reveal { transition: opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1); }
+.js-ready .reveal { opacity: 0; transform: translateY(24px); }
+.js-ready .reveal.in { opacity: 1; transform: none; }
+.d1 { transition-delay: .1s; }
+.d2 { transition-delay: .2s; }
+.d3 { transition-delay: .3s; }
+.d4 { transition-delay: .4s; }
+
+/* ── FOOTER ──────────────────────────────────────────────────────── */
+.footer { background: var(--navy); padding: 72px 56px 32px; }
+.footer__inner { max-width: 1100px; margin: 0 auto; }
+.footer__grid {
+  display: grid; grid-template-columns: 1.8fr 1fr 1fr 1.4fr;
+  gap: 48px; margin-bottom: 48px;
+}
+.footer__logo {
+  font-family: 'Playfair Display', serif; font-size: .88rem;
+  font-weight: 700; color: #fff; display: block;
+  letter-spacing: .08em; line-height: 1.2; margin-bottom: 10px;
+}
+.footer__tag { font-size: .66rem; font-weight: 300; color: rgba(255,255,255,.28); line-height: 1.85; margin-bottom: 20px; }
+.footer__badges { display: flex; gap: 10px; }
+.footer__badge {
+  width: 48px; height: 48px; border-radius: 50%;
+  border: 1px solid rgba(255,255,255,.14);
+  display: flex; align-items: center; justify-content: center;
+}
+.footer__badge-text { font-size: .32rem; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; color: rgba(255,255,255,.45); text-align: center; line-height: 1.4; }
+.footer__col-title { font-size: .48rem; font-weight: 500; letter-spacing: .24em; text-transform: uppercase; color: rgba(255,255,255,.28); display: block; margin-bottom: 16px; }
+.footer__links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.footer__links a { font-size: .72rem; font-weight: 300; color: rgba(255,255,255,.42); letter-spacing: .03em; transition: color .2s; }
+.footer__links a:hover { color: #fff; }
+.footer__contact { font-size: .72rem; font-weight: 300; color: rgba(255,255,255,.42); display: block; margin-bottom: 8px; letter-spacing: .02em; transition: color .2s; }
+.footer__contact:hover { color: #fff; }
+.footer__note { font-size: .6rem; font-weight: 300; color: rgba(255,255,255,.22); line-height: 1.8; }
+.footer__bottom { border-top: 1px solid rgba(255,255,255,.07); padding-top: 20px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+.footer__bottom p { font-size: .58rem; font-weight: 300; color: rgba(255,255,255,.18); }
+
+/* ── RESPONSIVE ──────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .nav { padding: 0 24px; }
+  .nav__links, .nav__cta { display: none; }
+  .nav__ham { display: flex; }
+  .page-hdr { padding: 100px 24px 60px; }
+  .footer { padding: 52px 24px 24px; }
+  .footer__grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+}
+@media (max-width: 520px) {
+  .footer__grid { grid-template-columns: 1fr; }
+}
+
+.contact-wrap { margin-top:66px;min-height:calc(100vh - 66px);display:grid;grid-template-columns:380px 1fr; }
+.cl { background:var(--navy);padding:72px 48px;display:flex;flex-direction:column;justify-content:space-between; }
+.cl__ey { font-size:.48rem;font-weight:400;letter-spacing:.32em;text-transform:uppercase;color:var(--bronze);display:block;margin-bottom:16px; }
+.cl__title { font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3vw,2.6rem);font-weight:800;color:#fff;line-height:1.06;margin-bottom:14px; }
+.cl__body { font-size:.76rem;font-weight:300;line-height:1.95;color:rgba(255,255,255,.38);margin-bottom:40px; }
+.cl__methods { display:flex;flex-direction:column;gap:2px; }
+.cl__method {
+  display:flex;gap:14px;align-items:flex-start;
+  padding:16px 18px;background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.07);border-radius:var(--radius);
+  text-decoration:none;transition:background .2s,border-color .2s;
+}
+.cl__method:hover { background:rgba(184,164,126,.1);border-color:rgba(184,164,126,.28); }
+.cl__method-icon { width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.07);display:flex;align-items:center;justify-content:center;flex-shrink:0; }
+.cl__method-icon svg { width:14px;height:14px;color:rgba(255,255,255,.6); }
+.cl__method-label { font-size:.48rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.26);display:block;margin-bottom:3px; }
+.cl__method-value { font-size:.84rem;font-weight:400;color:#fff;display:block; }
+.cl__method-note { font-size:.62rem;font-weight:300;color:rgba(255,255,255,.28);display:block;margin-top:2px; }
+.preferred { font-size:.46rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--bronze);margin-top:4px;display:block; }
+.cl__creds { border-top:1px solid rgba(255,255,255,.07);padding-top:24px;display:grid;grid-template-columns:1fr 1fr;gap:8px; }
+.cl__cred-big { font-family:'Playfair Display',serif;font-size:.9rem;font-weight:700;color:#fff; }
+.cl__cred-sub { font-size:.48rem;font-weight:300;color:rgba(255,255,255,.26);display:block;margin-top:2px;letter-spacing:.06em; }
+.cr { background:var(--linen);padding:72px 60px; }
+.cr__title { font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;margin-bottom:6px;color:var(--navy); }
+.cr__sub { font-size:.78rem;font-weight:300;color:var(--muted);line-height:1.95;margin-bottom:36px;max-width:460px; }
+.msg-guide { border-left:2px solid var(--bronze);padding:22px 26px;background:rgba(184,164,126,.07);border-radius:0 var(--radius) var(--radius) 0;margin-bottom:24px; }
+.msg-guide__label { font-size:.48rem;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--bronze);display:block;margin-bottom:14px; }
+.msg-guide__list { list-style:none;counter-reset:item;display:flex;flex-direction:column;gap:10px; }
+.msg-guide__list li { display:flex;gap:12px;font-size:.76rem;font-weight:300;color:var(--navy);line-height:1.65; }
+.msg-guide__list li::before { content:counter(item);counter-increment:item;font-family:'Playfair Display',serif;font-size:.68rem;font-weight:700;color:var(--bronze);flex-shrink:0;width:14px; }
+.timing { display:flex;gap:14px;align-items:flex-start;padding:20px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin-bottom:28px; }
+.timing__icon { flex-shrink:0;color:var(--bronze);opacity:.65;margin-top:2px; }
+.timing__icon svg { width:16px;height:16px; }
+.timing__text { font-size:.74rem;font-weight:300;color:var(--muted);line-height:1.88; }
+.timing__text strong { font-weight:600;color:var(--navy); }
+.cta-links { display:flex;flex-direction:column;gap:1px;border-radius:var(--radius);overflow:hidden; }
+.cta-lnk { display:flex;align-items:center;justify-content:space-between;padding:16px 20px;background:#fff;text-decoration:none;color:var(--navy);transition:background .18s; }
+.cta-lnk:hover { background:rgba(184,164,126,.08); }
+.cta-lnk--p { background:var(--navy);color:#fff; }
+.cta-lnk--p:hover { background:rgba(0,26,51,.88); }
+.cta-lnk__label { font-size:.48rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--faint);display:block;margin-bottom:3px; }
+.cta-lnk--p .cta-lnk__label { color:rgba(255,255,255,.32); }
+.cta-lnk__value { font-size:.84rem;font-weight:500; }
+.cta-lnk__arrow { font-size:.78rem;color:var(--bronze); }
+@media(max-width:860px){ .contact-wrap{grid-template-columns:1fr;} .cl{padding:52px 24px;} .cr{padding:48px 24px;} }
+
+</style>
+</head>
+<body>
+<nav class="nav" id="mainNav">
+  <a href="index.html" class="nav__logo">CASA<br>SORELLA</a>
+  <ul class="nav__links"><li><a href="about.html">About</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="standard.html">Our Standard</a></li></ul>
+  <a href="booking.html" class="nav__cta btn btn-navy">Get Started</a>
+  <button class="nav__ham" id="ham"><span></span><span></span><span></span></button>
+</nav>
+<div class="mob-overlay" id="mobOverlay"></div>
+<div class="mob-menu" id="mobMenu">
+  <button class="mob-menu__close" id="mobClose">×</button>
+<a href="about.html">About</a>
+<a href="services.html">Services</a>
+<a href="standard.html">Our Standard</a>
+</div>
+
+<div class="contact-wrap">
+  <div class="cl">
+    <div>
+      <span class="cl__ey">Begin Your Project</span>
+      <h1 class="cl__title">Let's talk<br>about your<br>space.</h1>
+      <p class="cl__body">We keep things personal. Text is fastest — or call, or email. You'll hear back from us directly.</p>
+      <div class="cl__methods">
+        <a href="sms:+12029687878" class="cl__method">
+          <div class="cl__method-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg></div>
+          <div><span class="cl__method-label">Text</span><span class="cl__method-value">(202) 968-7878</span><span class="cl__method-note">Fastest response</span><span class="preferred">★ Preferred</span></div>
+        </a>
+        <a href="tel:+12029687878" class="cl__method">
+          <div class="cl__method-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg></div>
+          <div><span class="cl__method-label">Call</span><span class="cl__method-value">(202) 968-7878</span><span class="cl__method-note">Mon – Sat</span></div>
+        </a>
+        <a href="/cdn-cgi/l/email-protection#09616c656566496a687a68247a667b6c656568276a6664" class="cl__method">
+          <div class="cl__method-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg></div>
+          <div><span class="cl__method-label">Email</span><span class="cl__method-value"><span class="__cf_email__" data-cfemail="5d35383131321d3e3c2e3c702e322f3831313c733e3230">[email&#160;protected]</span></span><span class="cl__method-note">Within 24 hours</span></div>
+        </a>
+      </div>
+    </div>
+    <div class="cl__creds">
+      <div><div class="cl__cred-big">Licensed GC</div><span class="cl__cred-sub">State-issued</span></div>
+      <div><div class="cl__cred-big">$1MM</div><span class="cl__cred-sub">Insured</span></div>
+    </div>
+  </div>
+
+  <div class="cr">
+    <h2 class="cr__title">What to include</h2>
+    <p class="cr__sub">A brief message is all it takes. Include these four things and we'll have a fixed quote back to you quickly.</p>
+    <div class="msg-guide reveal">
+      <span class="msg-guide__label">Your message should cover</span>
+      <ol class="msg-guide__list">
+        <li>Your <strong>name</strong></li>
+        <li>Your <strong>property address</strong></li>
+        <li><strong>What you're looking for</strong> — TV mounting, art installation, furniture, or a combination</li>
+        <li>An <strong>idea on timing</strong></li>
+      </ol>
+    </div>
+    <div class="timing reveal">
+      <div class="timing__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
+      <p class="timing__text"><strong>A note on timing — </strong>We suggest scheduling about a week after move-in, once you've had time to live in the space and figure out exactly where you want everything. It's a lot easier to move a couch a few inches now than once the TV is mounted.</p>
+    </div>
+    <div class="cta-links reveal">
+      <a href="sms:+12029687878&body=Hi%2C%20my%20name%20is%20%5Bname%5D.%20My%20address%20is%20%5Baddress%5D.%20I%27m%20looking%20for%20%5Bservice%5D%20and%20hoping%20to%20get%20this%20done%20%5Btiming%5D." class="cta-lnk cta-lnk--p">
+        <div><span class="cta-lnk__label">Preferred · Fastest</span><span class="cta-lnk__value">Text (202) 968-7878</span></div>
+        <span class="cta-lnk__arrow">→</span>
+      </a>
+      <a href="tel:+12029687878" class="cta-lnk">
+        <div><span class="cta-lnk__label">Call</span><span class="cta-lnk__value">(202) 968-7878</span></div>
+        <span class="cta-lnk__arrow">→</span>
+      </a>
+      <a href="/cdn-cgi/l/email-protection#b9d1dcd5d5d6f9dad8cad894cad6cbdcd5d5d897dad6d486caccdbd3dcdacd84e9cbd6d3dcdacd9c8b89f0d7c8ccd0cbc0" class="cta-lnk">
+        <div><span class="cta-lnk__label">Email</span><span class="cta-lnk__value"><span class="__cf_email__" data-cfemail="a3cbc6cfcfcce3c0c2d0c28ed0ccd1c6cfcfc28dc0ccce">[email&#160;protected]</span></span></div>
+        <span class="cta-lnk__arrow">→</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+
+<footer class="footer">
+  <div class="footer__inner">
+    <div class="footer__grid">
+      <div>
+        <a href="index.html" class="footer__logo">CASA<br>SORELLA</a>
+        <p class="footer__tag">Elevated Home Services<br>for the Modern Professional.</p>
+        <div class="footer__badges">
+          <div class="footer__badge"><span class="footer__badge-text">Licensed GC</span></div>
+          <div class="footer__badge"><span class="footer__badge-text">$1MM Insured</span></div>
+        </div>
+      </div>
+      <div>
+        <span class="footer__col-title">Pages</span>
+        <ul class="footer__links">
+          <li><a href="about.html">About</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="standard.html">Our Standard</a></li>
+        </ul>
+      </div>
+      <div>
+        <span class="footer__col-title">Contact</span>
+        <a href="sms:+12029687878" class="footer__contact">(202) 968-7878</a>
+        <a href="/cdn-cgi/l/email-protection#8de5e8e1e1e2cdeeecfeeca0fee2ffe8e1e1eca3eee2e0" class="footer__contact"><span class="__cf_email__" data-cfemail="ec8489808083ac8f8d9f8dc19f839e8980808dc28f8381">[email&#160;protected]</span></a>
+        <span class="footer__contact" style="opacity:.45;cursor:default;">Mon – Sat</span>
+      </div>
+      <div>
+        <span class="footer__col-title">Notes</span>
+        <p class="footer__note">We specialise in precision surface mounting and external concealment. In-wall electrical work is not provided.</p>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p>© 2025 Casa Sorella. All rights reserved.</p>
+      <p>Licensed General Contractor · $1MM Insured</p>
+    </div>
+  </div>
+</footer>
+<script>
+(function(){
+  // Nav scroll — navy at top, glass when scrolled
+  var nav = document.querySelector('.nav');
+  if(nav) window.addEventListener('scroll', function(){
+    nav.classList.toggle('solid', window.scrollY > 60);
+  }, {passive:true});
+
+  // Hamburger menu
+  var ham=document.getElementById('ham'), mm=document.getElementById('mobMenu'),
+      mo=document.getElementById('mobOverlay'), mc=document.getElementById('mobClose');
+  function openMenu(){ if(mm)mm.classList.add('open'); if(mo)mo.classList.add('open'); }
+  function closeMenu(){ if(mm)mm.classList.remove('open'); if(mo)mo.classList.remove('open'); }
+  if(ham) ham.addEventListener('click',openMenu);
+  if(mc)  mc.addEventListener('click',closeMenu);
+  if(mo)  mo.addEventListener('click',closeMenu);
+  if(mm)  mm.querySelectorAll('a').forEach(function(a){ a.addEventListener('click',closeMenu); });
+
+  // Scroll reveal
+  document.documentElement.classList.add('js-ready');
+  var els = document.querySelectorAll('.reveal');
+  if(!els.length) return;
+  if(!('IntersectionObserver' in window)){
+    els.forEach(function(el){ el.classList.add('in'); });
+    return;
+  }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.04, rootMargin: '0px 0px -24px 0px' });
+  els.forEach(function(el){ io.observe(el); });
+})();
+</script>
+</body>
+</html>
