@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Our Standard | Casa Sorella</title>
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,800;1,400;1,700&family=Montserrat:wght@200;300;400;500;600&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --linen:   #FAF9F6;
+  --navy:    #001A33;
+  --bronze:  #B8A47E;
+  --muted:   rgba(0,26,51,.52);
+  --faint:   rgba(0,26,51,.32);
+  --border:  rgba(0,26,51,.07);
+  --radius:  6px;
+  --grain:   url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.032'/%3E%3C/svg%3E");
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  background-color: var(--linen);
+  background-image: var(--grain);
+  background-size: 300px 300px;
+  color: var(--navy);
+  -webkit-font-smoothing: antialiased;
+  line-height: 1;
+}
+
+a { text-decoration: none; color: inherit; }
+img { display: block; max-width: 100%; }
+
+/* ── NAV — glassmorphism ──────────────────────────────────────────── */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+  height: 66px;
+  display: flex; align-items: center; padding: 0 56px;
+  background: var(--navy);
+  border-bottom: 1px solid rgba(184,164,126,.1);
+  transition: background .35s;
+}
+.nav.solid {
+  background: rgba(250,249,246,.94);
+  backdrop-filter: blur(20px) saturate(1.5);
+  -webkit-backdrop-filter: blur(20px) saturate(1.5);
+  border-bottom: 1px solid rgba(184,164,126,.2);
+  box-shadow: 0 2px 24px rgba(0,26,51,.07);
+}
+.nav.solid .nav__cta:hover {
+  background: #fff;
+  box-shadow: 0 0 0 2.5px var(--bronze);
+  border-color: var(--bronze);
+}
+.nav__logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem; font-weight: 700;
+  letter-spacing: .1em; line-height: 1.2;
+  color: #fff; margin-right: auto;
+  transition: color .35s;
+}
+.nav.solid .nav__logo { color: var(--navy); }
+.nav__links { display: flex; list-style: none; gap: 32px; margin-right: 32px; }
+.nav__links a {
+  font-size: .72rem; font-weight: 300; letter-spacing: .18em;
+  text-transform: uppercase; color: rgba(255,255,255,.65);
+  transition: color .2s; position: relative;
+}
+.nav.solid .nav__links a { color: var(--muted); }
+.nav__links a::after {
+  content: ''; position: absolute; bottom: -4px; left: 0;
+  width: 0; height: 1px; background: var(--bronze);
+  transition: width .3s ease;
+}
+.nav__links a:hover, .nav__links a.active { color: #fff; }
+.nav.solid .nav__links a:hover,
+.nav.solid .nav__links a.active { color: var(--navy); }
+.nav__links a:hover::after, .nav__links a.active::after { width: 100%; }
+.nav__cta {
+  font-family: 'Montserrat', sans-serif;
+  font-size: .82rem; font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase; white-space: nowrap;
+  background: rgba(255,255,255,.15); color: #fff;
+  padding: 10px 26px; border-radius: var(--radius);
+  border: 1px solid rgba(255,255,255,.35);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: box-shadow .32s ease, border-color .32s ease, transform .2s ease;
+}
+.nav__cta:hover {
+  box-shadow: 0 0 0 2.5px var(--bronze);
+  border-color: var(--bronze);
+  transform: translateY(-1px);
+}
+.nav__ham {
+  display: none; flex-direction: column;
+  justify-content: center; gap: 5px;
+  background: none; border: none; cursor: pointer; padding: 6px;
+}
+.nav__ham span {
+  display: block; width: 22px; height: 1.5px;
+  background: #fff; transition: background .35s;
+}
+.nav.solid .nav__cta { background: var(--navy); color: #fff; border-color: var(--navy); backdrop-filter: none; -webkit-backdrop-filter: none; }
+.nav.solid .nav__ham span { background: var(--navy); }
+
+/* ── MOBILE MENU ─────────────────────────────────────────────────── */
+.mob-overlay {
+  position: fixed; inset: 0; z-index: 600;
+  background: rgba(0,26,51,.45);
+  opacity: 0; pointer-events: none; transition: opacity .3s;
+}
+.mob-overlay.open { opacity: 1; pointer-events: all; }
+.mob-menu {
+  position: fixed; top: 0; right: 0; bottom: 0; width: 280px;
+  z-index: 700; background: var(--navy);
+  display: flex; flex-direction: column;
+  padding: 72px 36px 40px; gap: 24px;
+  transform: translateX(100%);
+  transition: transform .34s cubic-bezier(.16,1,.3,1);
+}
+.mob-menu.open { transform: translateX(0); }
+.mob-menu__close {
+  position: absolute; top: 18px; right: 22px;
+  background: none; border: none; color: #fff;
+  font-size: 1.5rem; cursor: pointer; line-height: 1;
+}
+.mob-menu a {
+  font-size: .72rem; font-weight: 200; letter-spacing: .22em;
+  text-transform: uppercase; color: rgba(255,255,255,.62);
+  transition: color .2s;
+}
+.mob-menu a:hover { color: #fff; }
+
+/* ── PAGE HEADER ─────────────────────────────────────────────────── */
+.page-hdr {
+  background: var(--navy);
+  padding: 126px 56px 76px; margin-top: 66px;
+}
+.page-hdr__inner { max-width: 1100px; margin: 0 auto; }
+.page-hdr__eyebrow {
+  font-size: .66rem; font-weight: 300; letter-spacing: .28em;
+  text-transform: uppercase; color: var(--bronze);
+  display: block; margin-bottom: 18px;
+}
+.page-hdr__title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.8rem,5vw,4.4rem); font-weight: 700;
+  color: #fff; line-height: 1.08; letter-spacing: .01em; margin-bottom: 22px;
+}
+.page-hdr__sub {
+  font-size: .84rem; font-weight: 300; letter-spacing: .025em;
+  color: rgba(255,255,255,.75); line-height: 2; max-width: 520px; ;
+}
+
+/* ── LAYOUT ──────────────────────────────────────────────────────── */
+.wrap { max-width: 1100px; margin: 0 auto; }
+
+/* ── SHARED TYPE ─────────────────────────────────────────────────── */
+.eyebrow {
+  font-size: .64rem; font-weight: 300; letter-spacing: .32em;
+  text-transform: uppercase; color: var(--bronze); display: block;
+}
+.title-serif {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700; color: var(--navy); line-height: 1.1;
+}
+.title-sans {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 200; color: var(--navy);
+  line-height: 1.3; letter-spacing: .08em;
+}
+.body-copy {
+  font-size: .82rem; font-weight: 300;
+  line-height: 2.05; color: var(--muted); letter-spacing: .025em;
+}
+
+/* ── BUTTONS ─────────────────────────────────────────────────────── */
+.btn {
+  display: inline-block;
+  font-family: 'Montserrat', sans-serif;
+  font-size: .66rem; font-weight: 700; letter-spacing: .18em;
+  text-transform: uppercase; cursor: pointer;
+  border-radius: var(--radius); transition: box-shadow .32s ease, border-color .32s ease, transform .2s ease;
+}
+.btn-navy {
+  background: var(--navy); color: #fff; border: 1px solid var(--navy); padding: 13px 36px; font-weight: 700;
+}
+.btn-navy:hover {
+  box-shadow: 0 0 0 2px var(--bronze), 0 8px 32px rgba(0,26,51,.22); border-color: var(--bronze); transform: translateY(-2px);
+}
+.btn-ghost {
+  background: transparent; color: var(--bronze);
+  border: 1px solid var(--bronze); padding: 13px 36px;
+}
+.btn-ghost:hover { background: var(--bronze); color: var(--navy); transform: translateY(-2px); box-shadow: 0 8px 32px rgba(184,164,126,.28); }
+
+/* ── BRONZE LINK ─────────────────────────────────────────────────── */
+.b-link {
+  font-size: .65rem; font-weight: 400; letter-spacing: .2em;
+  text-transform: uppercase; color: var(--navy);
+  border-bottom: 1px solid rgba(184,164,126,.4); padding-bottom: 2px;
+  transition: color .2s, border-color .2s;
+}
+.b-link:hover { color: var(--bronze); border-color: var(--bronze); }
+
+/* ── IMAGE TREATMENTS ────────────────────────────────────────────── */
+.img-wrap { overflow: hidden; border-radius: var(--radius); }
+.img-wrap img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+  filter: saturate(0.86);
+  transition: filter .8s cubic-bezier(.16,1,.3,1), transform .9s cubic-bezier(.16,1,.3,1);
+}
+.img-wrap:hover img { filter: saturate(1); transform: scale(1.04); }
+
+/* ── CARDS ───────────────────────────────────────────────────────── */
+.float-card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 6px 40px rgba(0,26,51,.07);
+  transition: box-shadow .35s ease, transform .35s ease;
+}
+.float-card:hover {
+  box-shadow: 0 20px 64px rgba(0,26,51,.13);
+  transform: translateY(-6px);
+}
+.dark-card {
+  background: var(--navy);
+  border-radius: 10px;
+  box-shadow: 0 12px 64px rgba(0,26,51,.22);
+}
+
+/* ── REVEAL ANIMATION ────────────────────────────────────────────── */
+.reveal { transition: opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1); }
+.js-ready .reveal { opacity: 0; transform: translateY(24px); }
+.js-ready .reveal.in { opacity: 1; transform: none; }
+.d1 { transition-delay: .1s; }
+.d2 { transition-delay: .2s; }
+.d3 { transition-delay: .3s; }
+.d4 { transition-delay: .4s; }
+
+/* ── FOOTER ──────────────────────────────────────────────────────── */
+.footer { background: var(--navy); padding: 72px 56px 32px; }
+.footer__inner { max-width: 1100px; margin: 0 auto; }
+.footer__grid {
+  display: grid; grid-template-columns: 1.8fr 1fr 1fr 1.4fr;
+  gap: 48px; margin-bottom: 48px;
+}
+.footer__logo {
+  font-family: 'Playfair Display', serif; font-size: .88rem;
+  font-weight: 700; color: #fff; display: block;
+  letter-spacing: .08em; line-height: 1.2; margin-bottom: 10px;
+}
+.footer__tag { font-size: .72rem; font-weight: 300; color: rgba(255,255,255,.50); line-height: 1.85; margin-bottom: 20px; }
+.footer__badges { display: flex; gap: 10px; }
+.footer__badge {
+  width: 48px; height: 48px; border-radius: 50%;
+  border: 1px solid rgba(255,255,255,.14);
+  display: flex; align-items: center; justify-content: center;
+}
+.footer__badge-text { font-size: .32rem; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; color: rgba(255,255,255,.45); text-align: center; line-height: 1.4; }
+.footer__col-title { font-size: .56rem; font-weight: 300; letter-spacing: .28em; text-transform: uppercase; color: rgba(255,255,255,.48); display: block; margin-bottom: 16px; }
+.footer__links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.footer__links a { font-size: .74rem; font-weight: 300; color: rgba(255,255,255,.58); letter-spacing: .03em; transition: color .2s; }
+.footer__links a:hover { color: #fff; }
+.footer__contact { font-size: .74rem; font-weight: 300; color: rgba(255,255,255,.58); display: block; margin-bottom: 8px; letter-spacing: .02em; transition: color .2s; }
+.footer__contact:hover { color: #fff; }
+.footer__note { font-size: .68rem; font-weight: 300; color: rgba(255,255,255,.44); line-height: 1.85; }
+.footer__bottom { border-top: 1px solid rgba(255,255,255,.07); padding-top: 20px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+.footer__bottom p { font-size: .62rem; font-weight: 300; color: rgba(255,255,255,.36); }
+
+/* ── RESPONSIVE ──────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .nav { padding: 0 24px; }
+  .nav__links, .nav__cta { display: none; }
+  .nav__ham { display: flex; }
+  .page-hdr { padding: 100px 24px 60px; }
+  .footer { padding: 52px 24px 24px; }
+  .footer__grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+}
+@media (max-width: 520px) {
+  .footer__grid { grid-template-columns: 1fr; }
+}
+
+/* ── OUR STANDARD — page-specific ──────────────────────────────── */
+
+/* HERO — massive whitespace, pure type */
+.std-hero {
+  margin-top: 66px;
+  padding: 14vh 10vw 12vh;
+  background: var(--linen);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8vw;
+  align-items: center;
+  min-height: 72vh;
+}
+.std-hero__left {}
+.std-hero__eyebrow {
+  font-size: .62rem; font-weight: 300; letter-spacing: .34em;
+  text-transform: uppercase; color: var(--bronze);
+  display: block; margin-bottom: 28px;
+}
+.std-hero__h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.8rem,5.5vw,5.6rem);
+  font-weight: 700; color: var(--navy);
+  line-height: .96; letter-spacing: .02em;
+  margin-bottom: 36px;
+}
+.std-hero__sub {
+  font-family: 'Montserrat', sans-serif;
+  font-size: .92rem; font-weight: 300;
+  color: var(--muted); line-height: 2.05;
+  letter-spacing: .025em; max-width: 520px;
+}
+.std-hero__right {
+  display: flex; flex-direction: column;
+  gap: 28px;
+}
+.std-hero__stat {
+  padding: 28px 0;
+  border-top: 1px solid var(--border);
+}
+.std-hero__stat:last-child { border-bottom: 1px solid var(--border); }
+.std-hero__stat-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.2rem; font-weight: 700;
+  color: var(--navy); display: block; margin-bottom: 4px;
+  letter-spacing: 0;
+}
+.std-hero__stat-label {
+  font-size: .66rem; font-weight: 300;
+  letter-spacing: .22em; text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* THREE PILLARS — Framework A */
+.pillars-section {
+  padding: 96px 56px;
+  background: var(--navy);
+}
+.pillars-header {
+  max-width: 1100px; margin: 0 auto 64px;
+  display: flex; justify-content: space-between;
+  align-items: flex-end; flex-wrap: wrap; gap: 20px;
+  border-bottom: 1px solid rgba(184,164,126,.14);
+  padding-bottom: 36px;
+}
+.pillars-header__title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.4rem,3.8vw,3.4rem);
+  font-weight: 700; color: #fff; letter-spacing: .01em;
+}
+.pillars-header__sub {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem; font-style: italic;
+  color: rgba(255,255,255,.58); max-width: 380px;
+  text-align: right; line-height: 1.75;
+  letter-spacing: .01em;
+}
+.pillars-grid {
+  max-width: 1100px; margin: 0 auto;
+  display: grid; grid-template-columns: repeat(3,1fr);
+  gap: 0;
+}
+.pillar {
+  padding: 0 52px 0 0;
+  margin-right: 52px;
+  border-right: 1px solid rgba(184,164,126,.14);
+}
+.pillar:last-child { border-right: none; padding-right: 0; margin-right: 0; }
+.pillar__roman {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.4rem; font-weight: 400;
+  color: var(--bronze); opacity: .45;
+  line-height: 1; display: block; margin-bottom: 22px;
+}
+.pillar__title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem; font-weight: 700;
+  color: #fff; margin-bottom: 18px; line-height: 1.2;
+  letter-spacing: .02em;
+}
+.pillar__body {
+  font-size: .88rem; font-weight: 300;
+  color: rgba(255,255,255,.62); font-size: .88rem; line-height: 1.95;
+  margin-bottom: 28px;
+}
+.pillar__spec-list {
+  list-style: none;
+  display: flex; flex-direction: column; gap: 8px;
+}
+.pillar__spec-list li {
+  font-size: .78rem; font-weight: 300;
+  color: rgba(255,255,255,.58);
+  display: flex; gap: 8px; align-items: baseline;
+  line-height: 1.6;
+  font-size: .78rem;
+}
+.pillar__spec-list li::before {
+  content: '·'; color: var(--bronze); flex-shrink: 0;
+}
+
+/* TIER COMPARISON */
+.tiers-section {
+  padding: 96px 56px;
+  background: var(--linen);
+}
+.tiers-header {
+  max-width: 1100px; margin: 0 auto 56px;
+}
+.tiers-header__eyebrow { margin-bottom: 14px; }
+.tiers-header__title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.4rem,3.8vw,3.4rem);
+  font-weight: 700; color: var(--navy);
+  letter-spacing: .01em; line-height: 1.1;
+}
+.tiers-header__sub {
+  font-size: .88rem; font-weight: 300;
+  color: var(--muted); line-height: 1.95;
+  margin-top: 16px; max-width: 580px;
+}
+.tiers-grid {
+  max-width: 1100px; margin: 0 auto;
+  display: grid; grid-template-columns: repeat(3,1fr);
+  gap: 20px;
+}
+.tier-card {
+  padding: 40px 36px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: #fff;
+  box-shadow: 0 3px 24px rgba(0,26,51,.05);
+  display: flex; flex-direction: column;
+  transition: box-shadow .3s, transform .3s;
+}
+.tier-card:hover {
+  box-shadow: 0 12px 48px rgba(0,26,51,.1);
+  transform: translateY(-4px);
+}
+.tier-card--featured {
+  background: var(--navy);
+  border-color: transparent;
+  box-shadow: 0 8px 56px rgba(0,26,51,.2);
+}
+.tier-card--featured:hover {
+  box-shadow: 0 20px 72px rgba(0,26,51,.28);
+}
+.tier-card__num {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem; font-weight: 400;
+  color: var(--bronze); opacity: .5;
+  margin-bottom: 20px; display: block;
+}
+.tier-card--featured .tier-card__num { opacity: .8; }
+.tier-card__label {
+  font-size: .60rem; font-weight: 300; letter-spacing: .28em;
+  text-transform: uppercase; color: var(--bronze);
+  display: block; margin-bottom: 10px;
+}
+.tier-card__title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem; font-weight: 700;
+  color: var(--navy); margin-bottom: 16px; line-height: 1.2;
+  letter-spacing: .01em;
+}
+.tier-card--featured .tier-card__title { color: #fff; }
+.tier-card__ideal {
+  font-size: .86rem; font-weight: 300;
+  color: var(--muted); line-height: 1.88;
+  margin-bottom: 22px; flex-grow: 1;
+}
+.tier-card--featured .tier-card__ideal { color: rgba(255,255,255,.60); }
+.tier-card__note {
+  border-top: 1px solid var(--border);
+  padding-top: 16px;
+  font-size: .80rem; font-weight: 300;
+  color: var(--faint); line-height: 1.85;
+  font-style: italic;
+}
+.tier-card--featured .tier-card__note {
+  border-color: rgba(184,164,126,.2);
+  color: rgba(255,255,255,.60);
+}
+
+/* SANCTUARY CLOSE — glassmorphism */
+.sanctuary-section {
+  padding: 96px 56px;
+  background: var(--linen);
+  border-top: 1px solid var(--border);
+}
+.sanctuary-glass {
+  max-width: 900px; margin: 0 auto;
+  background: rgba(250,249,246,.65);
+  backdrop-filter: blur(24px) saturate(1.5);
+  -webkit-backdrop-filter: blur(24px) saturate(1.5);
+  border: 1px solid rgba(184,164,126,.2);
+  border-radius: 12px;
+  padding: 72px 80px;
+  text-align: center;
+  box-shadow: 0 8px 56px rgba(0,26,51,.07);
+}
+.sanctuary-glass__eyebrow { margin-bottom: 28px; text-align: center; }
+.sanctuary-glass__body {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.3rem,2.2vw,1.9rem);
+  font-weight: 400; font-style: italic;
+  color: var(--navy); line-height: 1.72;
+  letter-spacing: .01em; margin-bottom: 44px;
+}
+.sanctuary-glass__body em {
+  font-style: normal; color: var(--bronze);
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .std-hero { grid-template-columns: 1fr; padding: 10vh 24px 8vh; gap: 48px; min-height: auto; }
+  .pillars-section { padding: 64px 24px; }
+  .pillars-header { flex-direction: column; align-items: flex-start; }
+  .pillars-header__sub { text-align: left; max-width: 100%; }
+  .pillars-grid { grid-template-columns: 1fr; row-gap: 40px; }
+  .pillar { border-right: none; padding-right: 0; margin-right: 0; border-bottom: 1px solid rgba(184,164,126,.14); padding-bottom: 40px; margin-bottom: 0; }
+  .pillar:last-child { border-bottom: none; padding-bottom: 0; }
+  .tiers-section { padding: 64px 24px; }
+  .tiers-grid { grid-template-columns: 1fr; }
+  .sanctuary-section { padding: 64px 24px; }
+  .sanctuary-glass { padding: 48px 32px; }
+}
+
+@media (max-width: 760px) {
+  }
+
+@media(max-width:760px){
+  }
+
+/* ── TESTIMONIALS GRID ───────────────────────────────────────────── */
+.testimonials-section {
+  padding: 96px 56px;
+  background: var(--navy);
+}
+.testimonials-header {
+  max-width: 1100px; margin: 0 auto 56px;
+  text-align: center;
+}
+.testimonials-header__eyebrow { margin-bottom: 14px; }
+.testimonials-header__title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.4rem,3.8vw,3.4rem);
+  font-weight: 700; color: #fff;
+  letter-spacing: .01em;
+}
+.testimonials-grid {
+  max-width: 1100px; margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 20px;
+}
+.t-card {
+  padding: 36px 32px 32px;
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(184,164,126,.16);
+  border-radius: 10px;
+  display: flex; flex-direction: column;
+  transition: background .28s, border-color .28s;
+}
+.t-card:hover {
+  background: rgba(255,255,255,.09);
+  border-color: rgba(184,164,126,.32);
+}
+.t-card::before {
+  content: '\201C';
+  font-family: 'Playfair Display', serif;
+  font-size: 2.4rem; color: var(--bronze);
+  opacity: .35; line-height: .6;
+  display: block; margin-bottom: 18px;
+}
+.t-card__text {
+  font-family: 'Montserrat', sans-serif;
+  font-size: .82rem; font-weight: 300; font-style: italic;
+  color: rgba(255,255,255,.88); line-height: 1.82;
+  flex-grow: 1; margin-bottom: 22px;
+}
+.t-card__name {
+  font-family: 'Montserrat', sans-serif;
+  font-size: .64rem; font-weight: 300;
+  letter-spacing: .24em; text-transform: uppercase;
+  color: var(--bronze);
+}
+@media (max-width: 760px) {
+  .testimonials-section { padding: 64px 24px; }
+  .testimonials-grid { grid-template-columns: 1fr; gap: 14px; }
+}
+
+/* ── CONTEXTUAL QUOTES ──────────────────────────────────────────── */
+
+.svc-quote--dark /* About page — tucked below position cards */
+.about-quote {
+  margin-top: 28px;
+  padding: 20px 0 0;
+  border-top: 1px solid var(--border);
+}
+.about-quote__text {
+  font-family: 'Playfair Display', serif;
+  font-size: .82rem; font-weight: 400; font-style: italic;
+  color: var(--muted); line-height: 1.78;
+  display: block; margin-bottom: 10px;
+}
+.about-quote__attr {
+  font-family: 'Montserrat', sans-serif;
+  font-size: .60rem; font-weight: 300;
+  letter-spacing: .22em; text-transform: uppercase;
+  color: var(--bronze);
+}
+
+/* Standard page — large anchor quote above testimonials grid */
+.standard-anchor-quote {
+  max-width: 1100px; margin: 0 auto 56px;
+  text-align: center;
+}
+.standard-anchor-quote__text {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.1rem, 1.8vw, 1.5rem);
+  font-weight: 400; font-style: italic;
+  color: #fff; line-height: 1.7;
+  display: block; margin-bottom: 14px;
+  opacity: .82;
+}
+.standard-anchor-quote__attr {
+  font-family: 'Montserrat', sans-serif;
+  font-size: .62rem; font-weight: 300;
+  letter-spacing: .26em; text-transform: uppercase;
+  color: var(--bronze);
+}
+
+@media (max-width: 860px) {
+  .standard-anchor-quote { margin-bottom: 40px; }
+}
+
+
+.footer__tagline {
+  display: flex; align-items: center;
+  justify-content: center; gap: 32px;
+  padding-bottom: 48px; margin-bottom: 48px;
+  border-bottom: 1px solid rgba(255,255,255,.07);
+}
+.footer__tagline-mark {
+  flex: 1; height: 1px;
+  background: rgba(184,164,126,.22);
+  max-width: 80px;
+}
+.footer__tagline-text {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(.92rem, 1.4vw, 1.1rem);
+  font-style: italic;
+  color: rgba(255,255,255,.62);
+  text-align: center;
+  letter-spacing: .015em;
+  line-height: 1.6;
+  max-width: 540px;
+}
+@media (max-width: 600px) {
+  .footer__tagline-mark { display: none; }
+  .footer__tagline { padding-bottom: 32px; margin-bottom: 32px; }
+}
+
+</style>
+</head>
+<body>
+<nav class="nav" id="mainNav">
+  <a href="index.html" class="nav__logo">CASA<br>SORELLA</a>
+  <ul class="nav__links"><li><a href="about.html">About</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="standard.html" class="active">Our Standard</a></li></ul>
+  <a href="booking.html" class="nav__cta btn btn-navy">Get Started</a>
+  <button class="nav__ham" id="ham"><span></span><span></span><span></span></button>
+</nav>
+<div class="mob-overlay" id="mobOverlay"></div>
+<div class="mob-menu" id="mobMenu">
+  <button class="mob-menu__close" id="mobClose">×</button>
+<a href="about.html">About</a>
+<a href="services.html">Services</a>
+<a href="standard.html">Our Standard</a>
+</div>
+
+<header style="margin-top:66px;"><!-- spacer for fixed nav --></header>
+
+<!-- ── HERO ─────────────────────────────────────────────────────── -->
+<section class="std-hero">
+  <div class="std-hero__left reveal">
+    <span class="std-hero__eyebrow">Casa Sorella</span>
+    <h1 class="std-hero__h1">PEACE OF MIND.<br>BY DEFAULT.</h1>
+    <p class="std-hero__sub">Your home is not a job site — it is a private sanctuary. We enter it with the technical authority of a licensed firm, the discretion of a trusted partner, and a standard of care that does not change based on the size of the project.</p>
+  </div>
+  <div class="std-hero__right reveal d1">
+    <div class="std-hero__stat">
+      <span class="std-hero__stat-num">$1,000,000</span>
+      <span class="std-hero__stat-label">Liability Coverage — Every Project</span>
+    </div>
+    <div class="std-hero__stat">
+      <span class="std-hero__stat-num">Licensed GC</span>
+      <span class="std-hero__stat-label">State-Issued · High-Rise Approved</span>
+    </div>
+    <div class="std-hero__stat">
+      <span class="std-hero__stat-num">Fixed Quote</span>
+      <span class="std-hero__stat-label">Zero Hourly Unknowns</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── THREE PILLARS ─────────────────────────────────────────────── -->
+<section class="pillars-section">
+  <div class="pillars-header reveal">
+    <span class="eyebrow" style="color:var(--bronze);">The Architecture of Certainty</span>
+    <h2 class="pillars-header__title">Our Standard of Care</h2>
+    <p class="pillars-header__sub">Three commitments that define every project, regardless of scope.</p>
+  </div>
+  <div class="pillars-grid">
+    <div class="pillar reveal">
+      <span class="pillar__roman">I</span>
+      <div class="pillar__title">Structural Integrity</div>
+      <p class="pillar__body">Before any installation begins, we identify the composition of your wall — metal stud, masonry, concrete, or wood-frame. The substrate dictates the anchoring strategy. The strategy dictates the longevity.</p>
+      <ul class="pillar__spec-list">
+        <li>Metal stud identification and bridging</li>
+        <li>Masonry and concrete anchor specification</li>
+        <li>Load-bearing verification for every mount point</li>
+        <li>No installation proceeds without substrate confirmation</li>
+      </ul>
+    </div>
+    <div class="pillar reveal d1">
+      <span class="pillar__roman">II</span>
+      <div class="pillar__title">Vetted Discretion</div>
+      <p class="pillar__body">We are a specialized firm, not a platform. The professionals who enter your home are background-checked to the highest residential standards and chosen for their commitment to the craft. We do not hire for a nine-to-five — we hire people who believe in the standard of care, and who respect the privacy of the environment they are invited into.</p>
+      <ul class="pillar__spec-list">
+        <li>Thoroughly background checked and vetted</li>
+        <li>Dedicated professionals — no gig labor</li>
+        <li>Protective discretion &amp; site cleanliness</li>
+        <li>Mission-driven technical execution</li>
+      </ul>
+    </div>
+    <div class="pillar reveal d2">
+      <span class="pillar__roman">III</span>
+      <div class="pillar__title">Documented Accountability</div>
+      <p class="pillar__body">We carry the general-contractor-level insurance and professional licensing that luxury building management requires. Your home is protected. Your neighbor's home is protected. Your building's requirements are met — by default, not by request.</p>
+      <ul class="pillar__spec-list">
+        <li>$1,000,000 liability policy on every visit</li>
+        <li>State-licensed General Contractor credentials</li>
+        <li>Certificate of insurance provided upon request</li>
+        <li>High-rise building management approved</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ── TIER COMPARISON ───────────────────────────────────────────── -->
+<section class="tiers-section">
+  <div class="tiers-header reveal">
+    <span class="eyebrow tiers-header__eyebrow">Navigating Your Service Options</span>
+    <h2 class="tiers-header__title">Understanding the Market</h2>
+    <p class="tiers-header__sub">A clear-eyed view of what exists, and where Casa Sorella sits within it. We present this not as a comparison, but as an honest map for the discerning resident.</p>
+  </div>
+  <div class="tiers-grid">
+    <div class="tier-card reveal">
+      <span class="tier-card__num">I</span>
+      <span class="tier-card__label">General Task Platforms</span>
+      <div class="tier-card__title">On-Demand Gig Apps</div>
+      <p class="tier-card__ideal">Ideal for low-stakes assembly tasks where speed and cost are the primary considerations.</p>
+      <div class="tier-card__note">Characterized by variable worker vetting and limited professional liability coverage. Substrate verification is not standard practice.</div>
+    </div>
+    <div class="tier-card reveal d1">
+      <span class="tier-card__num">II</span>
+      <span class="tier-card__label">Independent Labor</span>
+      <div class="tier-card__title">Individual Handyman</div>
+      <p class="tier-card__ideal">Ideal for general residential maintenance in standard construction environments.</p>
+      <div class="tier-card__note">Often lacks the specific high-rise liability depth and GC-level documentation required by modern luxury building management.</div>
+    </div>
+    <div class="tier-card tier-card--featured reveal d2">
+      <span class="tier-card__num">III</span>
+      <span class="tier-card__label">The Specialized Firm</span>
+      <div class="tier-card__title">Casa Sorella</div>
+      <p class="tier-card__ideal">Ideal for residents who prioritize their time, their sanctuary, and the absolute certainty that the work is done correctly — once.</p>
+      <div class="tier-card__note">A high-performance approach where vetted character is as vital as technical competence. Our team performs this work because they believe in the offering, ensuring your project is a priority, not just a task.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TESTIMONIALS ─────────────────────────────────────────────── -->
+<section class="testimonials-section">
+  <div class="testimonials-header reveal">
+    <span class="eyebrow testimonials-header__eyebrow">Client Trust &amp; Comfort</span>
+    <h2 class="testimonials-header__title">In Their Own Words</h2>
+  </div>
+  <div class="standard-anchor-quote reveal">
+    <span class="standard-anchor-quote__text">"Attention to detail and communication throughout were top notch!"</span>
+    <span class="standard-anchor-quote__attr">Michael P.</span>
+  </div>
+  <div class="testimonials-grid">
+    <div class="t-card reveal">
+      <p class="t-card__text">Exceptional attention to detail... Clearly knows [their] craft. I'd recommend 10/10 times!</p>
+      <span class="t-card__name">Shyon G.</span>
+    </div>
+    <div class="t-card reveal d1">
+      <p class="t-card__text">10/10, went above and beyond.</p>
+      <span class="t-card__name">Khushnood F.</span>
+    </div>
+    <div class="t-card reveal d2">
+      <p class="t-card__text">Knowledgeable and overall amazing... I cannot say one bad word.</p>
+      <span class="t-card__name">Areya S.</span>
+    </div>
+    <div class="t-card reveal">
+      <p class="t-card__text">Fantastic! Knowledgable and friendly!</p>
+      <span class="t-card__name">Natalie W.</span>
+    </div>
+    <div class="t-card reveal d1">
+      <p class="t-card__text">Excellent job mounting my TV-professional, efficient, and super friendly. I'd definitely hire again for future projects!</p>
+      <span class="t-card__name">Margaret L.</span>
+    </div>
+    <div class="t-card reveal d2">
+      <p class="t-card__text">Amazing job.</p>
+      <span class="t-card__name">Jonathan H.</span>
+    </div>
+
+    <div class="t-card reveal d1">
+      <p class="t-card__text">Went above and beyond.</p>
+      <span class="t-card__name">Anna H.</span>
+    </div>
+    <div class="t-card reveal d2">
+      <p class="t-card__text">Very professional and efficient. Would absolutely recommend to anyone.</p>
+      <span class="t-card__name">Simon L.</span>
+    </div>
+    <div class="t-card reveal">
+      <p class="t-card__text">Quick and efficient, while paying attention to all the details.</p>
+      <span class="t-card__name">Brendan K.</span>
+    </div>
+    <div class="t-card reveal d1">
+      <p class="t-card__text">Great job and very helpful.</p>
+      <span class="t-card__name">Michelle F.</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── SANCTUARY CLOSE ───────────────────────────────────────────── -->
+<section class="sanctuary-section">
+  <div class="sanctuary-glass reveal">
+    <span class="eyebrow sanctuary-glass__eyebrow">The Casa Sorella Promise</span>
+    <p class="sanctuary-glass__body">
+      We recognize that the integrity of your space is not the place to cut corners.<br><br>
+      Casa Sorella delivers the efficiency of a quick-service visit with the rigorous standards of a <em>general contracting firm</em> — and the human discretion of a trusted partner. Your sanctuary, delivered with certainty.
+    </p>
+    <a href="booking.html" class="btn btn-navy">Begin Your Project</a>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer__inner">
+    <div class="footer__tagline">
+      <span class="footer__tagline-mark"></span>
+      <p class="footer__tagline-text">Elevated home services for the modern professional. Delivered with the certainty of a licensed firm.</p>
+      <span class="footer__tagline-mark"></span>
+    </div>
+    <div class="footer__grid">
+      <div>
+        <a href="index.html" class="footer__logo">CASA<br>SORELLA</a>
+        <p class="footer__tag">Elevated Home Services<br>for the Modern Professional.</p>
+        <div class="footer__badges">
+          <div class="footer__badge"><span class="footer__badge-text">Licensed GC</span></div>
+          <div class="footer__badge"><span class="footer__badge-text">$1MM Insured</span></div>
+        </div>
+      </div>
+      <div>
+        <span class="footer__col-title">Pages</span>
+        <ul class="footer__links">
+          <li><a href="about.html">About</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="standard.html">Our Standard</a></li>
+        </ul>
+      </div>
+      <div>
+        <span class="footer__col-title">Contact</span>
+        <a href="sms:+12029687878" class="footer__contact">(202) 968-7878</a>
+        <a href="/cdn-cgi/l/email-protection#4d25282121220d2e2c3e2c603e223f2821212c632e2220" class="footer__contact"><span class="__cf_email__" data-cfemail="a6cec3cacac9e6c5c7d5c78bd5c9d4c3cacac788c5c9cb">[email&#160;protected]</span></a>
+        <span class="footer__contact" style="opacity:.45;cursor:default;">Mon – Sat</span>
+      </div>
+      <div>
+        <span class="footer__col-title">Notes</span>
+        <p class="footer__note">We specialize in precision surface mounting and external concealment. In-wall electrical work is not provided.</p>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p>© 2025 Casa Sorella. All rights reserved.</p>
+      <p>Licensed General Contractor · $1MM Insured</p>
+    </div>
+  </div>
+</footer>
+<script>
+(function(){
+  // Nav scroll — navy at top, glass when scrolled
+  var nav = document.querySelector('.nav');
+  if(nav) window.addEventListener('scroll', function(){
+    nav.classList.toggle('solid', window.scrollY > 60);
+  }, {passive:true});
+
+  // Hamburger menu
+  var ham=document.getElementById('ham'), mm=document.getElementById('mobMenu'),
+      mo=document.getElementById('mobOverlay'), mc=document.getElementById('mobClose');
+  function openMenu(){ if(mm)mm.classList.add('open'); if(mo)mo.classList.add('open'); }
+  function closeMenu(){ if(mm)mm.classList.remove('open'); if(mo)mo.classList.remove('open'); }
+  if(ham) ham.addEventListener('click',openMenu);
+  if(mc)  mc.addEventListener('click',closeMenu);
+  if(mo)  mo.addEventListener('click',closeMenu);
+  if(mm)  mm.querySelectorAll('a').forEach(function(a){ a.addEventListener('click',closeMenu); });
+
+  // Scroll reveal
+  document.documentElement.classList.add('js-ready');
+  var els = document.querySelectorAll('.reveal');
+  if(!els.length) return;
+  if(!('IntersectionObserver' in window)){
+    els.forEach(function(el){ el.classList.add('in'); });
+    return;
+  }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.04, rootMargin: '0px 0px -24px 0px' });
+  els.forEach(function(el){ io.observe(el); });
+})();
+</script>
+</body>
+</html>
